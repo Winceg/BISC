@@ -12,7 +12,7 @@ object BISC {
     def playerMove(grid: Array[Array[String]]): Unit = {
       this.lastPos = Array(this.currentPos: _*)
       println(s"Player ${this.playerID}, enter direction :")
-      var input: String = Input.readString()
+      val input: String = Input.readString()
 
       input match {
         case "d"
@@ -61,7 +61,7 @@ object BISC {
     import scala.collection.mutable
 
     def floodFill(startX: Int, startY: Int, playerID: Int): Unit = {
-      var grid: Array[Array[String]] = Array.fill(this.gridSizeX, this.gridSizeY)("0")
+      val grid: Array[Array[String]] = Array.fill(this.gridSizeX, this.gridSizeY)("0")
       val stack = mutable.Stack((startX, startY))
       val visited = mutable.Set[(Int, Int)]()
 
@@ -102,7 +102,7 @@ object BISC {
 
     /*
       /** Sets freshly captured cells to captured */
-      def setCatpured(cellType: Int, playerID: Int): Unit = {
+      def setCaptured(cellType: Int, playerID: Int): Unit = {
 
         for (i <- this.grid.indices) {
           for (j <- this.grid(i).indices) {
@@ -129,6 +129,7 @@ object BISC {
         =>println("floodFill")
         case "*"
         =>
+        }
     }
 
         /** Fills the captured area with captured cells */
