@@ -3,12 +3,14 @@ object BISC {
   class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
     var startPos: Array[Int] = Array(startPosX, startPosY)
     var currentPos: Array[Int] = startPos
+    var lastPos: Array[Int] = currentPos
     var score: Int = 0
     var win: Boolean = false
     var gameOver: Boolean = false
 
     /** Gets user input and sets new current position */
     def playerMove(grid: Array[Array[String]]): Unit = {
+      this.lastPos = this.currentPos
       println(s"Player ${this.playerID}, enter direction :")
       var input: String = Input.readString()
 
@@ -31,7 +33,7 @@ object BISC {
       this.score = 0
       for (i <- grid.indices) {
         for (j <- grid(i).indices) {
-          if(grid(i)(j) == this.playerID.toString){
+          if (grid(i)(j) == this.playerID.toString) {
             this.score += 1
           }
         }
@@ -49,6 +51,54 @@ object BISC {
       this.grid(currentPos(0))(currentPos(1)) = playerID.toString
     }
 
+    /** Sets cells on a not yet closed path to temporary captured */
+    def setTemp(lastPos: Array[Int], playerID: Int): Unit = {
+      this.grid(lastPos(0))(lastPos(1)) = "t" /*+ playerID.toString*/
+    }
+
+    /** Code donné pour le flood fill : */
+
+    import scala.collection.mutable
+
+    def floodFill(startX: Int, startY: Int, playerID: Int): Unit = {
+      var grid: Array[Array[String]] = Array.fill(this.gridSizeX, this.gridSizeY)("0")
+      val stack = mutable.Stack((startX, startY))
+      val visited = mutable.Set[(Int, Int)]()
+
+      for (i <- this.grid.indices) {
+        for (j <- this.grid(i).indices) {
+          if (this.grid(i)(j) == playerID.toString) grid(i)(j) = playerID.toString else grid(i)(j) = "0"
+        }
+      }
+
+      while (stack.nonEmpty) {
+        val (x, y) = stack.pop()
+
+        if (this.getStatus(Array(x, y)) != playerID.toString && !visited.contains((x, y))) {
+          setCell(grid, x, y, "f" + playerID) // Use player trace (2) for filling
+          visited.add((x, y))
+          println("kikou")
+          // Explore all four directions
+          stack.push((x + 1, y))
+          stack.push((x - 1, y))
+          stack.push((x, y + 1))
+          stack.push((x, y - 1))
+
+          for (i <- this.grid.indices) {
+            for (j <- this.grid(i).indices) {
+              print(s" ${grid(i)(j)} ")
+            }
+            println()
+          }
+        }
+      }
+    }
+
+    def setCell(grid: Array[Array[String]], x: Int, y: Int, fill: String): Array[Array[String]] = {
+      grid(x)(y) = fill
+      grid
+    }
+
     /*
       /** Sets freshly captured cells to captured */
       def setCatpured(cellType: Int, playerID: Int): Unit = {
@@ -63,29 +113,35 @@ object BISC {
         }
       }
 
-      /** Sets cells on a not yet closed path to temporary captured */
-      def setTemp(playerID: Int): Unit = {
+*/
 
-      }
+    /** Gets the status of a cell and return it : captured, temporary captured, empty */
+    def getStatus(pos: Array[Int]): String = {
+      grid(pos(0))(pos(1))
+    }
 
-      /** Gets the status of a cell : captured, temporary captured, empty, wall */
-      def getState(playerID: Int): Unit = {
 
-      }
+    /*
+    def action(status: String, playerID: Int): Unit = {
+      match{
+        case playerID.toString
+        =>println("floodFill")
+        case "*"
+        =>
+    }
 
-      /** Fills the captured area with captured cells */
-      def fillCaptured(playerID: Int): Unit = {
+        /** Fills the captured area with captured cells */
+        def fillCaptured(playerID: Int): Unit = {
 
-        for (i <- this.grid.indices) {
-          for (j <- this.grid(i).indices) {
+          for (i <- this.grid.indices) {
+            for (j <- this.grid(i).indices) {
 
+            }
           }
-        }
-      }*/
+        }*/
 
     /** Displays the grid */
     def displayGrid(): Unit = {
-
       for (i <- this.grid.indices) {
         for (j <- this.grid(i).indices) {
           print(s" ${grid(i)(j)} ")

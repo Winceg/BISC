@@ -10,19 +10,17 @@ object Main {
 
     do {
       arena.setCurrentPos(player1.currentPos, player1.playerID)
-      arena.setCurrentPos(player2.currentPos, player2.playerID)
 
       arena.displayGrid()
-      println(s"Player ${player1.playerID} : ${player1.getScore(arena.grid)} pts")
-      println(s"Player ${player2.playerID} : ${player2.getScore(arena.grid)} pts")
+      //println(s"Player ${player1.playerID} : ${player1.getScore(arena.grid)} pts")
 
       player1.playerMove(arena.grid)
+      arena.setTemp(player1.lastPos, player1.playerID)
 
-      arena.displayGrid()
-      println(s"Player ${player1.playerID} : ${player1.getScore(arena.grid)} pts")
-      println(s"Player ${player2.playerID} : ${player2.getScore(arena.grid)} pts")
+       arena.floodFill(10, 10, player1.playerID)
+       arena.displayGrid()
+      // var a = Input.readString()
 
-      player2.playerMove(arena.grid)
-    }while(!player1.gameOver)
+    } while (!player1.gameOver)
   }
 }
