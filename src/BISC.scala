@@ -8,15 +8,17 @@ object BISC {
     var gameOver: Boolean = false
 
     /* Gets user input and returns next position */
-    def move(grid: Array[Array[string]]): Array[Int] = {
+    def move(grid: Array[Array[String]]): Array[Int] = {
       var nextPos: Array[Int] = Array(0, 0)
-      var input: Char = Input.readString()
+      var input: String = Input.readString()
+
+      println(s"${this.currentPos(0)}, ${this.currentPos(1)}")
 
       input match {
-        case 'd' => if (this.currentPos(0) += 1 < grid.length) this.currentPos(0) += 1 else gameOver = true
-        case 'a' => if (this.currentPos(0) -= 1 > 0) this.currentPos(0) -= 1 else gameOver = true
-        case 'w' => if (this.currentPos(1) += 1 < grid.length) this.currentPos(1) += 1 else gameOver = true
-        case 's' => if (this.currentPos(1) -= 1 > 0) this.currentPos(1) -= 1 else gameOver = true
+        case "d" => if ((this.currentPos(0) + 1) < grid.length) this.currentPos(0) += 1 else gameOver = true
+        case "a" => if ((this.currentPos(0) - 1) > 0) this.currentPos(0) -= 1 else gameOver = true
+        case "w" => if ((this.currentPos(1) + 1) < grid.length) this.currentPos(1) += 1 else gameOver = true
+        case "s" => if ((this.currentPos(1) - 1) > 0) this.currentPos(1) -= 1 else gameOver = true
       }
       this.currentPos
     }
@@ -32,8 +34,8 @@ object BISC {
   }
 
   /** Class defining the whole arena, and functions to modify the cells on the arena */
-  class Arena(val gridSize: Array[Int]) {
-    var grid: Array[Array[String]] = Array.fill(gridSize[0], gridSize[1])('*')
+  class Arena(val gridSizeX: Int, val gridSizeY: Int) {
+    var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
     /*
       /* Sets freshly captured cells to captured */
       def setCatpured(cellType: Int, playerID: Int): Unit = {
