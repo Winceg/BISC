@@ -13,15 +13,15 @@ object BISC {
       println("Enter direction :")
       var input: String = Input.readString()
 
-      println(s"Pos : ${this.currentPos(0)}, ${this.currentPos(1)}")
+      println(s"Pos : ${this.currentPos(0)}, ${this.currentPos(1)}\ngrid.length : ${grid.length}")
 
       input match {
         case "d"
-        => if ((this.currentPos(1) + 1) <= grid.length) this.currentPos(1) = this.currentPos(1) + 1 else this.gameOver = true
+        => if ((this.currentPos(1) + 1) < grid.length) this.currentPos(1) = this.currentPos(1) + 1 else this.gameOver = true
         case "a"
         => if ((this.currentPos(1) - 1) >= 0) this.currentPos(1) = this.currentPos(1) - 1 else this.gameOver = true
         case "s"
-        => if ((this.currentPos(0) + 1) <= grid.length) this.currentPos(0) = this.currentPos(0) + 1 else this.gameOver = true
+        => if ((this.currentPos(0) + 1) < grid.length) this.currentPos(0) = this.currentPos(0) + 1 else this.gameOver = true
         case "w"
         => if ((this.currentPos(0) - 1) >= 0) this.currentPos(0) = this.currentPos(0) - 1 else this.gameOver = true
         case _
