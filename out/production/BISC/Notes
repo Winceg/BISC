@@ -1,0 +1,206 @@
+
+nextPos : up, down, left, right
+isOwn : check if nextPos is captured
+fill : if isOwn is true :
+->all "t" turn to "-"
+->all "*" inside of "o"'s turn to "o"
+
+isWall : if nextPos is "0" : game over
+lineCut : if nextPos of player1 is "-" of player2 (or vice versa) : game over for player2
+score : number of "o" for a player
+
+Class Player
+	playerID
+	startPos[x,y]
+	currentPos[x,y]
+	score
+	win = false
+
+	move() >> registers player input, compute nextPos
+	getScore() >> counts all captured cells
+
+Class Arena
+	size[x,y]
+
+	setCaptured(temp or empty) >> turns t to o (playerID_captured)
+	setTemp() >> turns * to t (playerID_temp)
+	getState() >> gets the state of the cell
+		ifWall >> gameOver
+		ifTemp >> gameOver
+		ifOwn >> fill()
+		ifEmpty >> setTemp()
+		ifCaptured >> setCaptured()
+		ifPlayerXTemp >> gameOver && win = true
+
+	fill() >> fills captured surface
+		Set all t as o (captured)
+		DFS-paint the shit out of the arena's surface (temporary array, returns only new captured cells
+		All non painted cells > setCaptured()
+		setScore()
+
+Create empty array with random start surface(max size) and start position
+Create player1
+	startPos[x,y]
+Create player2
+	startPos[x,y]
+
+do
+	Move(input) : if no input after time-out, increment last incrementend direction
+	getState() of nextPos
+
+	clockTick
+while(gameOver)
+winner = player with win == true
+
+
+/** Code donné pour le flood fill : */
+import scala.collection.mutable
+
+def floodFill(grid: Grid, startX: Int, startY: Int): Unit = {
+  val stack = mutable.Stack((startX, startY))
+  val visited = mutable.Set[(Int, Int)]()
+
+  while (stack.nonEmpty) {
+    val (x, y) = stack.pop()
+
+    if (grid.getCell(x, y) == 0 && !visited.contains((x, y))) {
+      grid.setCell(x, y, 2) // Use player trace (2) for filling
+      visited.add((x, y))
+
+      // Explore all four directions
+      stack.push((x + 1, y))
+      stack.push((x - 1, y))
+      stack.push((x, y + 1))
+      stack.push((x, y - 1))
+    }
+  }
+}
+
+
+000000000000000000000000000000000000
+0**********************************0
+0***xttttt*************************0
+0*oooo***t*************************0
+0*ooootttt*************************0
+0********************ttttt*********0
+0********************x***t*********0
+0************************t*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+000000000000000000000000000000000000
+
+000000000000000000000000000000000000
+0**********************************0
+0***xttttt*************************0
+0*oooo***t*************************0
+0*ooootttt*************************0
+0********************ttttt*********0
+0********************t***t*********0
+0********************x***t*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+000000000000000000000000000000000000
+
+000000000000000000000000000000000000
+0**********************************0
+0***xttttt*************************0
+0*oooo***t*************************0
+0*ooootttt*************************0
+0********************ttttt*********0
+0********************t***t*********0
+0********************t***t*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+000000000000000000000000000000000000
+
+000000000000000000000000000000000000
+0**********************************0
+0***xttttt*************************0
+0*oooo***t*************************0
+0*ooootttt*************************0
+0********************-----*********0
+0********************-***-*********0
+0********************-***-*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+000000000000000000000000000000000000
+
+000000000000000000000000000000000000
+0**********************************0
+0***xttttt*************************0
+0*oooo***t*************************0
+0*ooootttt*************************0
+0********************ooooo*********0
+0********************ooooo*********0
+0********************ooooo*********0
+0*******************oxoooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+0*******************oooooo*********0
+000000000000000000000000000000000000
+
+
+
+def moveSnake(grid: Array[Array[Int]], headX: Int, headY: Int, direction: (Int, Int)): (Int, Int) = {
+  val (dx, dy) = direction
+  val newX = headX + dx
+  val newY = headY + dy
+
+  // Vérifier si le déplacement est valide
+  if (newX < 0 || newY < 0 || newX >= grid.length || newY >= grid(0).length) {
+    println("La tête sort de la grille !")
+    return (headX, headY) // Pas de mouvement
+  }
+
+  grid(newX)(newY) match {
+    case 0 => // Territoire vierge
+      grid(headX)(headY) = 2 // Ancienne position devient tracé
+      grid(newX)(newY) = 3 // Nouvelle position devient la tête
+      (newX, newY)
+
+    case 1 => // Territoire capturé
+      println("Périmètre complété !")
+      grid(headX)(headY) = 2
+      detectAndFillPerimeter(grid, newX, newY)
+      (newX, newY)
+
+    case 2 => // Retour sur le tracé
+      println("Boucle détectée !")
+      grid(headX)(headY) = 2
+      detectAndFillPerimeter(grid, newX, newY)
+      (newX, newY)
+
+    case _ => // Autres cas (erreur ou hors limite)
+      println("Collision ou erreur inattendue.")
+      (headX, headY)
+  }
+}
+
+def detectAndFillPerimeter(grid: Array[Array[Int]], startX: Int, startY: Int): Unit = {
+  val directions = Array((1, 0), (-1, 0), (0, 1), (0, -1))
+  val visited = Array.ofDim[Boolean](grid.length, grid(0).length)
+
+  def dfs(x: Int, y: Int): Unit = {
+    if (x < 0 || y < 0 || x >= grid.length || y >= grid(0).length || visited(x)(y) || grid(x)(y) == 1) return
+    visited(x)(y) = true
+    for ((dx, dy) <- directions) dfs(x + dx, y + dy)
+  }
+
+  // Lancer le DFS depuis une case extérieure
+  dfs(0, 0)
+
+  // Remplir les cases non visitées
+  for (x <- grid.indices; y <- grid(x).indices) {
+    if (!visited(x)(y) && grid(x)(y) == 0) {
+      grid(x)(y) = 1 // Capturer la zone
+    }
+  }
+}

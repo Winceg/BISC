@@ -1,7 +1,7 @@
 object BISC {
   /** Class defining the player attributes and functions */
   class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
-    var startPos: Array[Int] = Array(startPosX, startPosY)
+    val startPos: Array[Int] = Array(startPosX, startPosY)
     var currentPos: Array[Int] = startPos
     var lastPos: Array[Int] = currentPos
     var score: Int = 0
@@ -10,7 +10,7 @@ object BISC {
 
     /** Gets user input and sets new current position */
     def playerMove(grid: Array[Array[String]]): Unit = {
-      this.lastPos = this.currentPos
+      this.lastPos = Array(this.currentPos: _*)
       println(s"Player ${this.playerID}, enter direction :")
       var input: String = Input.readString()
 
@@ -67,7 +67,8 @@ object BISC {
 
       for (i <- this.grid.indices) {
         for (j <- this.grid(i).indices) {
-          if (this.grid(i)(j) == playerID.toString) grid(i)(j) = playerID.toString else grid(i)(j) = "0"
+          //println(s"${this.grid(i)(j)}")
+          if (this.grid(i)(j) == playerID.toString || this.grid(i)(j) == "t") grid(i)(j) = playerID.toString else grid(i)(j) = "0"
         }
       }
 

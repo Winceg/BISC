@@ -5,7 +5,7 @@ object Main {
     println("Hello world!")
 
     val arena: Arena = new Arena(20, 20)
-    val player1: Player = new Player(1, 4, 2)
+    val player1: Player = new Player(1, 10, 5)
     val player2: Player = new Player(2, 12, 9)
 
     do {
@@ -17,8 +17,8 @@ object Main {
       player1.playerMove(arena.grid)
       arena.setTemp(player1.lastPos, player1.playerID)
 
-       arena.floodFill(10, 10, player1.playerID)
-       arena.displayGrid()
+      arena.floodFill(10, 10, player1.playerID)
+      // arena.displayGrid()
       // var a = Input.readString()
 
     } while (!player1.gameOver)
