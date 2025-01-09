@@ -1,19 +1,16 @@
 object BISC {
   /** Class defining the player attributes and functions */
-  class Player(val playerID: Int) {
-    var startPos: Array[Int] = Array(2, 4)
+  class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
+    var startPos: Array[Int] = Array(startPosX, startPosY)
     var currentPos: Array[Int] = startPos
     var score: Int = 0
     var win: Boolean = false
     var gameOver: Boolean = false
 
-    /* Gets user input and returns next position */
+    /** Gets user input and sets new current position */
     def playerMove(grid: Array[Array[String]]): Unit = {
-      var nextPos: Array[Int] = Array(0, 0)
-      println("Enter direction :")
+      println(s"Player ${this.playerID}, enter direction :")
       var input: String = Input.readString()
-
-      println(s"Pos : ${this.currentPos(0)}, ${this.currentPos(1)}\ngrid.length : ${grid.length}")
 
       input match {
         case "d"
@@ -27,18 +24,20 @@ object BISC {
         case _
         => println("Saisie non valide")
       }
-
-      println(s"${this.currentPos(0)}, ${this.currentPos(1)}")
     }
-    /*this.currentPos =
-      def getScore(grid: Array[Array[string]]): Int = {
-        for (i <- grid.indices) {
-          for (j <- grid(i).indices) {
 
+    /** Counts the number of captured cells */
+    def getScore(grid: Array[Array[String]]): Int = {
+      this.score = 0
+      for (i <- grid.indices) {
+        for (j <- grid(i).indices) {
+          if(grid(i)(j) == this.playerID.toString){
+            this.score += 1
           }
         }
-
-      }*/
+      }
+      this.score
+    }
   }
 
   /** Class defining the whole arena, and functions to modify the cells on the arena */
