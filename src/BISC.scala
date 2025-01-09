@@ -8,7 +8,7 @@ object BISC {
     var gameOver: Boolean = false
 
     /* Gets user input and returns next position */
-    def playerMove(grid: Array[Array[String]]) {
+    def playerMove(grid: Array[Array[String]]): Unit = {
       var nextPos: Array[Int] = Array(0, 0)
       println("Enter direction :")
       var input: String = Input.readString()
