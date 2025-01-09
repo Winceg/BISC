@@ -44,7 +44,14 @@ object BISC {
 
   /** Class defining the whole arena, and functions to modify the cells on the arena */
   class Arena(val gridSizeX: Int, val gridSizeY: Int) {
-    var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
+    var grid: Array[Array[String]] = Array.fill(gridSizeX + 2, gridSizeY + 2)("*")
+    for (i <- grid.indices) {
+      for (j <- grid(i).indices) {
+        if (i == 0 || i == grid.length - 1 || i != 0 && j == 0 || i != 0 && j == grid(0).length - 1) {
+          grid(i)(j) = "-"
+        }
+      }
+    }
 
     /** Sets current position of player */
     def setCurrentPos(currentPos: Array[Int], playerID: Int): Unit = {
@@ -61,60 +68,68 @@ object BISC {
     import scala.collection.mutable
 
     def floodFill(startX: Int, startY: Int, playerID: Int): Unit = {
-      val grid: Array[Array[String]] = Array.fill(this.gridSizeX, this.gridSizeY)("0")
+      val grid: Array[Array[String]] = Array.fill(this.gridSizeX + 2, this.gridSizeY + 2)("0")
       val stack = mutable.Stack((startX, startY))
       val visited = mutable.Set[(Int, Int)]()
 
+      /** Populates the temporary flood array with already captured cells */
       for (i <- this.grid.indices) {
         for (j <- this.grid(i).indices) {
-          //println(s"${this.grid(i)(j)}")
           if (this.grid(i)(j) == playerID.toString || this.grid(i)(j) == "t") grid(i)(j) = playerID.toString else grid(i)(j) = "0"
+          if (i == 0 || i == grid.length - 1 || i != 0 && j == 0 || i != 0 && j == grid(0).length - 1) {
+            grid(i)(j) = "-"
+          }
         }
       }
+      /*
+      println("Tablu temporaire")
+      for (i <- this.grid.indices) {
+        for (j <- this.grid(i).indices) {
+          print(s" ${grid(i)(j)} ")
+        }
+        println()
+      }*/
 
       while (stack.nonEmpty) {
         val (x, y) = stack.pop()
+        //println(s"x: $x, y: $y, value = ${getCell(grid, x, y)}")
 
-        if (this.getStatus(Array(x, y)) != playerID.toString && !visited.contains((x, y))) {
-          setCell(grid, x, y, "f" + playerID) // Use player trace (2) for filling
+        if (getCell(grid, x, y) == "0" && !visited.contains((x, y))) {
+          setCell(grid, x, y, "f") // + playerID) // Use player trace (2) for filling
           visited.add((x, y))
-          println("kikou")
           // Explore all four directions
           stack.push((x + 1, y))
           stack.push((x - 1, y))
           stack.push((x, y + 1))
           stack.push((x, y - 1))
 
+          /*println("Tablu temporaire")
           for (i <- this.grid.indices) {
             for (j <- this.grid(i).indices) {
               print(s" ${grid(i)(j)} ")
             }
             println()
-          }
+          }*/
+        }
+      }
+      /** Repopulates the original array with the player's captured surfaces */
+      for (i <- grid.indices) {
+        for (j <- grid(i).indices) {
+          if (grid(i)(j) != "f" && grid(i)(j) != "-") setCell(this.grid, i, j, playerID.toString) // else this.grid(i)(j) = this.grid(i)(j)
         }
       }
     }
 
+    /** Gets the value of the cell in the temporary flood array */
+    def getCell(grid: Array[Array[String]], x: Int, y: Int): String = {
+      grid(x)(y)
+    }
+
+    /** Sets the value of the cell in the temporary flood array */
     def setCell(grid: Array[Array[String]], x: Int, y: Int, fill: String): Array[Array[String]] = {
       grid(x)(y) = fill
       grid
     }
-
-    /*
-      /** Sets freshly captured cells to captured */
-      def setCaptured(cellType: Int, playerID: Int): Unit = {
-
-        for (i <- this.grid.indices) {
-          for (j <- this.grid(i).indices) {
-            if (grid(i)(j) == "t" + playerID) {
-              grid(i)(j) == playerID
-            }
-
-          }
-        }
-      }
-
-*/
 
     /** Gets the status of a cell and return it : captured, temporary captured, empty */
     def getStatus(pos: Array[Int]): String = {
@@ -127,8 +142,6 @@ object BISC {
       match{
         case playerID.toString
         =>println("floodFill")
-        case "*"
-        =>
         }
     }
 
