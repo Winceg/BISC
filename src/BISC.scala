@@ -28,7 +28,7 @@ object BISC {
       }
     }
 
-    /** Counts the number of captured cells */
+    /** Counts the number of captured cells 000*/
     def getScore(grid: Array[Array[String]]): Int = {
       this.score = 0
       for (i <- grid.indices) {
