@@ -1,28 +1,36 @@
 object BISC {
   /** Class defining the player attributes and functions */
   class Player(val playerID: Int) {
-    var startPos: Array[Int] = Array(4, 4)
+    var startPos: Array[Int] = Array(2, 4)
     var currentPos: Array[Int] = startPos
     var score: Int = 0
     var win: Boolean = false
     var gameOver: Boolean = false
 
     /* Gets user input and returns next position */
-    def move(grid: Array[Array[String]]): Array[Int] = {
+    def playerMove(grid: Array[Array[String]]) {
       var nextPos: Array[Int] = Array(0, 0)
+      println("Enter direction :")
       var input: String = Input.readString()
 
-      println(s"${this.currentPos(0)}, ${this.currentPos(1)}")
+      println(s"Pos : ${this.currentPos(0)}, ${this.currentPos(1)}")
 
       input match {
-        case "d" => if ((this.currentPos(0) + 1) < grid.length) this.currentPos(0) += 1 else gameOver = true
-        case "a" => if ((this.currentPos(0) - 1) > 0) this.currentPos(0) -= 1 else gameOver = true
-        case "w" => if ((this.currentPos(1) + 1) < grid.length) this.currentPos(1) += 1 else gameOver = true
-        case "s" => if ((this.currentPos(1) - 1) > 0) this.currentPos(1) -= 1 else gameOver = true
+        case "d"
+        => if ((this.currentPos(1) + 1) <= grid.length) this.currentPos(1) = this.currentPos(1) + 1 else this.gameOver = true
+        case "a"
+        => if ((this.currentPos(1) - 1) >= 0) this.currentPos(1) = this.currentPos(1) - 1 else this.gameOver = true
+        case "s"
+        => if ((this.currentPos(0) + 1) <= grid.length) this.currentPos(0) = this.currentPos(0) + 1 else this.gameOver = true
+        case "w"
+        => if ((this.currentPos(0) - 1) >= 0) this.currentPos(0) = this.currentPos(0) - 1 else this.gameOver = true
+        case _
+        => println("Saisie non valide")
       }
-      this.currentPos
+
+      println(s"${this.currentPos(0)}, ${this.currentPos(1)}")
     }
-    /*
+    /*this.currentPos =
       def getScore(grid: Array[Array[string]]): Int = {
         for (i <- grid.indices) {
           for (j <- grid(i).indices) {
@@ -36,8 +44,14 @@ object BISC {
   /** Class defining the whole arena, and functions to modify the cells on the arena */
   class Arena(val gridSizeX: Int, val gridSizeY: Int) {
     var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
+
+    /** Sets current position of player */
+    def setCurrentPos(currentPos: Array[Int], playerID: Int): Unit = {
+      this.grid(currentPos(0))(currentPos(1)) = playerID.toString
+    }
+
     /*
-      /* Sets freshly captured cells to captured */
+      /** Sets freshly captured cells to captured */
       def setCatpured(cellType: Int, playerID: Int): Unit = {
 
         for (i <- this.grid.indices) {
@@ -53,11 +67,6 @@ object BISC {
       /** Sets cells on a not yet closed path to temporary captured */
       def setTemp(playerID: Int): Unit = {
 
-        for (i <- this.grid.indices) {
-          for (j <- this.grid(i).indices) {
-
-          }
-        }
       }
 
       /** Gets the status of a cell : captured, temporary captured, empty, wall */
@@ -80,8 +89,9 @@ object BISC {
 
       for (i <- this.grid.indices) {
         for (j <- this.grid(i).indices) {
-
+          print(s" ${grid(i)(j)} ")
         }
+        println()
       }
     }
 
