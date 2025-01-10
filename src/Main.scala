@@ -1,4 +1,4 @@
-import BISC.{Arena, Player}
+/*import BISC.{Arena, Player}*/
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -12,6 +12,7 @@ object Main {
 
     do {
       /** Sets the current position of the player */
+      /** these are test lines */
       arena.setCurrentPos(player1.currentPos, player1.playerID)
       arena.setCurrentPos(Array(9,5), player1.playerID)
       arena.setCurrentPos(Array(9,4), player1.playerID)
@@ -27,12 +28,12 @@ object Main {
 
       /** Asks the player for the next step, and updates the current position */
       player1.playerMove(arena.grid)
-      /** Turns the last position into a "t" */
-      arena.setTemp(player1.lastPos, player1.playerID)
+      /** Turns the last position into a "t" 2 */
+      arena.setTemp(player1.lastPos)
 
 
       /** Flood fills all cells that are outside the perimeter of the player's surface */
-      arena.floodFill(10, 15, player1.playerID)
+      //arena.floodFill(10, 15, player1.playerID)
       // arena.displayGrid()
       // var a = Input.readString()
 
