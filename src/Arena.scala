@@ -121,7 +121,7 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
 
   def action(pos: Array[Int], playerID: String): Unit = {
     var temp: String = "t" + playerID
-    var captured: String = playerID.toString
+    var captured: String = playerID
     println(this.grid(pos(0))(pos(1)))
     this.grid(pos(0))(pos(1)) match {
       case captured => println("floodFill")
