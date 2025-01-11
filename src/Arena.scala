@@ -1,9 +1,9 @@
 class Arena(val gridSizeX: Int, val gridSizeY: Int) {
-
+/*
   /** CONTENT : Floodfill, arena state */
 
   /** Class defining the whole arena, and functions to modify the cells on the arena */
-  var grid: Array[Array[Int]] = Array.fill(gridSizeX, gridSizeY)(0: Int) // dont forget the +2 later !!!!!!
+  var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("0") // dont forget the +2 later !!!!!!
 
   /* its only a visual option --> for later
   for (i <- grid.indices) {
@@ -17,12 +17,12 @@ class Arena(val gridSizeX: Int, val gridSizeY: Int) {
 
   /** Sets current position of player */
   def setCurrentPos(currentPos: Array[Int], playerID: Int): Unit = {
-    this.grid(currentPos(0))(currentPos(1)) = playerID
+    this.grid(currentPos(0))(currentPos(1)) = playerID.toString
   }
 
   /** Sets cells on a not yet closed path to temporary captured */
   def setTemp(lastPos: Array[Int]): Unit = {
-    this.grid(lastPos(0))(lastPos(1)) = 2
+    this.grid(lastPos(0))(lastPos(1)) = "t"
   }
 
   /** Code donné pour le flood fill : */
@@ -132,5 +132,5 @@ class Arena(val gridSizeX: Int, val gridSizeY: Int) {
         println()
       }
     }
-
+*/
 }

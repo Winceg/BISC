@@ -1,3 +1,11 @@
+* : empty
+- : border
+1 : player1 captured
+t1 : player1 temp
+x1 : player1 head
+2 : player2 captured
+t2 : player2 temp
+x2 : player2 head
 
 nextPos : up, down, left, right
 isOwn : check if nextPos is captured

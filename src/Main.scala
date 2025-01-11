@@ -3,6 +3,9 @@
 object Main {
   def main(args: Array[String]): Unit = {
 
+  }
+}
+/*
     /** Creates the playing arena, with a given size */
     val arena: Arena = new Arena(20, 20)
 
@@ -24,19 +27,20 @@ object Main {
       arena.displayGrid()
 
       /** Displays the player's score */
-      println(s"Player ${player1.playerID} : ${player1.getScore(arena.grid)} pts")
+      //println(s"Player ${player1.playerID} : ${player1.getScore(arena.grid)} pts")
 
       /** Asks the player for the next step, and updates the current position */
-      player1.playerMove(arena.grid)
+      //player1.playerMove(arena.grid)
       /** Turns the last position into a "t" 2 */
       arena.setTemp(player1.lastPos)
 
 
       /** Flood fills all cells that are outside the perimeter of the player's surface */
-      //arena.floodFill(10, 15, player1.playerID)
+      // arena.floodFill(10, 15, player1.playerID)
       // arena.displayGrid()
       // var a = Input.readString()
 
     } while (!player1.gameOver)
   }
 }
+ */
