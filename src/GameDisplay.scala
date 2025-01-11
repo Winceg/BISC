@@ -1,5 +1,5 @@
 import hevs.graphics.FunGraphics
-
+/*
 class GameDisplay (val arena : Arena,val sizeFactor : Int){
   val sizeFactor : Int
   val graphikGridX : Int = arena.gridSizeX*sizeFactor
@@ -13,3 +13,4 @@ class GameDisplay (val arena : Arena,val sizeFactor : Int){
   }
 
 }
+*/
