@@ -57,15 +57,15 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
       }
     }
 
-/*
-    println("Tablu temporaire1")
-    for (i <- this.grid.indices) {
-      for (j <- this.grid(i).indices) {
-        print(s" ${grid(i)(j)} ")
-      }
-      println()
-    }
-*/
+    /*
+        println("Tablu temporaire1")
+        for (i <- this.grid.indices) {
+          for (j <- this.grid(i).indices) {
+            print(s" ${grid(i)(j)} ")
+          }
+          println()
+        }
+    */
 
     //whole section not understood
     while (stack.nonEmpty) {
@@ -80,15 +80,15 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
         stack.push((x, y + 1))
         stack.push((x, y - 1))
 
-/*
-        println("Tablu temporaire2")
-        for (i <- this.grid.indices) {
-          for (j <- this.grid(i).indices) {
-            print(s" ${grid(i)(j)} ")
-          }
-          println()
-        }
-        */
+        /*
+                println("Tablu temporaire2")
+                for (i <- this.grid.indices) {
+                  for (j <- this.grid(i).indices) {
+                    print(s" ${grid(i)(j)} ")
+                  }
+                  println()
+                }
+                */
 
       }
     }
@@ -118,14 +118,18 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
       grid(pos(0))(pos(1))
     }
   }
-  /*
-  def action(status: String, playerID: Int): Unit = {
-  match{
-    case playerID.toString
-    =>println("floodFill")
+
+  def action(pos: Array[Int], playerID: String): Unit = {
+    var temp: String = "t" + playerID
+    var captured: String = playerID.toString
+    println(this.grid(pos(0))(pos(1)))
+    this.grid(pos(0))(pos(1)) match {
+      case captured => println("floodFill")
+      case temp => println("Game over!")
     }
   }
 
+  /*
   /** Fills the captured area with captured cells */
   def fillCaptured(playerID: Int): Unit = {
 

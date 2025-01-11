@@ -22,12 +22,13 @@ object Main {
 
       /** Asks the player for the next step, and updates the current position */
       player1.playerMove(arena.grid)
-      /** Turns the last position into a "t" 2 */
+      /** Turns the last position into a "t" plus the player's ID */
       arena.setTemp(player1.lastPos, player1.playerID)
 
 
       /** Flood fills all cells that are outside the perimeter of the player's surface */
-      arena.floodFill(20, 1, player1.playerID)
+      //arena.floodFill(20, 1, player1.playerID)
+      arena.action(player1.currentPos, player1.playerID.toString)
       // arena.displayGrid()
       // var a = Input.readString()
 
