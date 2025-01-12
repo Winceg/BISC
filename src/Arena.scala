@@ -3,8 +3,8 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
   /** CONTENT : floodFill, arena state */
 
   /** Adding room for a double border around the grid
-   * Border 1 with "-" limits the floodFill function, border 2 with "0" limits the movements of the player (this is the actual border of the arena)
-   * The floodFill function is then able to move outside of the playing border of the arena in order to flood all empty cells, for example when a player's surface separates the arena in 2 */
+   * Outer border with "-" limits the floodFill function, while inner border with "0" limits the movements of the player (this is the actual border of the arena)
+   * The floodFill function is then able to move outside the playing border of the arena in order to flood all empty cells, for example when a player's surface separates the arena in 2 */
   gridSizeX += 4
   gridSizeY += 4
 
@@ -14,9 +14,11 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
   /** Turning border "*" to "-" */
   for (i <- this.grid.indices) {
     for (j <- this.grid(i).indices) {
+      /** Inner border */
       if (i == 1 && j > 1 || i == 1 && j < grid(0).length - 1 || i == grid.length - 2 && j != 0 || i == grid.length - 2 && j != grid(0).length - 1 || i != 0 && j == 1 || i != 0 && j == grid(0).length - 2) {
         grid(i)(j) = "0"
       }
+      /** Outer border */
       if (i == 0 || i == grid.length - 1 || i != 0 && j == 0 || i != 0 && j == grid(0).length - 1) {
         grid(i)(j) = "-"
       }
@@ -63,26 +65,15 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
     while (stack.nonEmpty) {
       val (x, y) = stack.pop()
 
-      /** Tries to increment x and y in each direction, checking if the next cell is valid */
+      /** Tries to increment x and y in each direction, checking if the next cell is valid, i.e. not a border, and not inside the new perimeter */
       if (getCell(grid, x, y) == "0" && getCell(grid, x, y) != "-" && !visited.contains((x, y))) {
-        setCell(grid, x, y, "f" + playerID) // Use player trace (2) for filling
+        setCell(grid, x, y, "f" + playerID) // Fills the not captured cells with "f" + the player's ID
         visited.add((x, y))
         // Explore all four directions
         stack.push((x + 1, y))
         stack.push((x - 1, y))
         stack.push((x, y + 1))
         stack.push((x, y - 1))
-
-        /*
-                println("Tablu temporaire2")
-                for (i <- this.grid.indices) {
-                  for (j <- this.grid(i).indices) {
-                    print(s" ${grid(i)(j)} ")
-                  }
-                  println()
-                }
-
-         */
       }
     }
 
@@ -108,13 +99,30 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
   }
 
   def action(pos: Array[Int], playerID: String, players: Array[Player]): String = {
+    /** Finds the ID of the other player, whose tail has been hit */
+    val losingPlayer = players.find(p => p.playerID.toString == this.grid(pos(0))(pos(1)).substring(1)) map { player =>
+      player.playerID
+    }
+    val losingPlayerID = if (losingPlayer.isDefined) losingPlayer.toString.substring(5, 6) else "0" // Transforms the output of the search to a player's String ID value
+
+    /** Matches the different outcomes corresponding to the content of a cell */
     this.grid(pos(0))(pos(1)) match {
-      case s if s == playerID => "ff" // Returns "ff" for floodFill
+      /** If cell matches the player's ID, returns "ff" to execute the floodFill function */
+      case s if s == playerID =>
+        "ff" // Returns "ff" for floodFill
+
+      /** If cell matches "t" + the player's ID, he hit his own tail and the game is over */
       case s if s == s"t$playerID" =>
-        println(s"Player${playerID}, you hit your own tail !")
+        println(s"Player$playerID, you hit your own tail !")
         "go" // Returns "go" for game over
-      // case s if s.substring(1) => return "go2" // Returns "go" for game over
-      case _ => "sp" // Returns "sp" for set positions
+
+      /** If cell matches "t" + another player's ID, the game is over and the other player loses */
+      case s if s.substring(1) == losingPlayerID =>
+        "gop" + losingPlayerID // Returns "go" + losing player's ID for game over
+
+      /** If the cell contains a "*" or another player's ID, sets the cell to temp */
+      case _ =>
+        "sp" // Returns "sp" for set positions
     }
   }
 

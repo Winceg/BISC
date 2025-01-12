@@ -9,7 +9,6 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
   var lastPos: Array[Int] = currentPos.clone()
   var score: Int = 0
   var gameOver: Boolean = false
-  var win: Boolean = false //might be useless
 
   /** Gets user input and sets new current position */
   def playerMove(grid: Array[Array[String]]): Unit = {
@@ -17,6 +16,8 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
     println(s"Player ${this.playerID}, enter direction :")
     val input: String = Input.readString()
 
+    /** Matches player input to movements in the grid
+     * Also ends the game if the player hits the wall (next position is outside the playing surface */
     input match {
       case "d" =>
         if ((this.currentPos(1) + 1) < grid.length - 2) {
@@ -50,8 +51,6 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
         println("Saisie non valide")
     }
   }
-
-  /** we need to implement setTemp to the last position of the player */
 
   /** Counts the number of captured cells */
   def getScore(grid: Array[Array[String]]): Int = {

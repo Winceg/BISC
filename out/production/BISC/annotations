@@ -1,6 +1,7 @@
 Ce qu'il nous manque pour que ça marche :
 
 - faire en sorte que le floodFill prenne comme bord pas les tirets mais le fait d'etre aux valeurs max et min de l'array
+  >> FloodFill démarre en dehors du périmètre de jeu, et peut se déplacer dans ce couloir autour de la surface de jeu
 - au lieu de mettre enter à chaque déplacement , une lecteur d'input continue avec un timer
   >> à gérer via fungraphics
 
