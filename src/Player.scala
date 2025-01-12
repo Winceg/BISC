@@ -4,7 +4,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
 
 
   /** Class defining the player attributes and functions */
-  val startPos: Array[Int] = Array(startPosX, startPosY)
+  val startPos: Array[Int] = Array(startPosX + 2, startPosY + 2)
   var currentPos: Array[Int] = startPos.clone()
   var lastPos: Array[Int] = currentPos.clone()
   var score: Int = 0
@@ -18,16 +18,36 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
     val input: String = Input.readString()
 
     input match {
-      case "d"
-      => if ((this.currentPos(1) + 1) < grid.length - 1) this.currentPos(1) = this.currentPos(1) + 1 else this.gameOver = true
-      case "a"
-      => if ((this.currentPos(1) - 1) >= 1) this.currentPos(1) = this.currentPos(1) - 1 else this.gameOver = true
-      case "s"
-      => if ((this.currentPos(0) + 1) < grid.length - 1) this.currentPos(0) = this.currentPos(0) + 1 else this.gameOver = true
-      case "w"
-      => if ((this.currentPos(0) - 1) >= 1) this.currentPos(0) = this.currentPos(0) - 1 else this.gameOver = true
-      case _
-      => println("Saisie non valide")
+      case "d" =>
+        if ((this.currentPos(1) + 1) < grid.length - 2) {
+          this.currentPos(1) = this.currentPos(1) + 1
+        } else {
+          this.gameOver = true
+          println("You've hit the wall !")
+        }
+      case "a" =>
+        if ((this.currentPos(1) - 1) >= 2) {
+          this.currentPos(1) = this.currentPos(1) - 1
+        } else {
+          this.gameOver = true
+          println("You've hit the wall !")
+        }
+      case "s" =>
+        if ((this.currentPos(0) + 1) < grid.length - 2) {
+          this.currentPos(0) = this.currentPos(0) + 1
+        } else {
+          this.gameOver = true
+          println("You've hit the wall !")
+        }
+      case "w" =>
+        if ((this.currentPos(0) - 1) >= 2) {
+          this.currentPos(0) = this.currentPos(0) - 1
+        } else {
+          this.gameOver = true
+          println("You've hit the wall !")
+        }
+      case _ =>
+        println("Saisie non valide")
     }
   }
 

@@ -15,8 +15,8 @@ object Main {
 
     println(s"Number of players : ${players.length}")
 
-    arena.grid(4)(3) = "1"
-    arena.grid(16)(17) = "2"
+    arena.grid(6)(6) = "1"
+    arena.grid(18)(18) = "2"
 
     do {
       /** Displays the grid in the console */
@@ -31,22 +31,20 @@ object Main {
 
         /** Determines the action based on the content of the cell */
         arena.action(player.currentPos, player.playerID.toString, players) match {
-          case "ff" => {
-            arena.floodFill(20, 1, player.playerID) // Flood fills all cells that are outside the perimeter of the player's surface
+          case "ff" =>
+            arena.floodFill(player.playerID) // Flood fills all cells that are outside the perimeter of the player's surface
             /** Sets the current position of the player */
             arena.setCurrentPos(player.currentPos, player.playerID)
-          }
           case "go" => player.gameOver = true
-          /*case "go2" => {
+          /*case "go2" =>
             player2.gameOver = true
-          }*/
-          case "sp" => {
+          */
+          case "sp" =>
             /** Sets the current position of the player */
             arena.setCurrentPos(player.currentPos, player.playerID)
 
             /** Turns the last position into a "t" plus the player's ID */
             arena.setTemp(player.lastPos, player.playerID)
-          }
           case _ =>
         }
       }
