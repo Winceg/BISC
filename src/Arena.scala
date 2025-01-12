@@ -113,33 +113,19 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
       grid
     }
 
-    /** Gets the status of a cell and return it : captured, temporary captured, empty */
-    def getStatus(pos: Array[Int]): String = {
-      grid(pos(0))(pos(1))
-    }
   }
 
-  def action(pos: Array[Int], playerID: String): Unit = {
-    var temp: String = "t" + playerID
-    var captured: String = playerID
-    println(this.grid(pos(0))(pos(1)))
+  def action(pos: Array[Int], playerID: String, players: Array[Player]): String = {
     this.grid(pos(0))(pos(1)) match {
-      case captured => println("floodFill")
-      case temp => println("Game over!")
+      case s if s == playerID => "ff" // Returns "ff" for floodFill
+      case s if s == s"t$playerID" => {
+        println(s"Player${playerID}, you hit your own tail !")
+        "go" // Returns "go" for game over
+      }
+      // case s if s.substring(1) => return "go2" // Returns "go" for game over
+      case _ => "sp" // Returns "sp" for set positions
     }
   }
-
-  /*
-  /** Fills the captured area with captured cells */
-  def fillCaptured(playerID: Int): Unit = {
-
-    for (i <- this.grid.indices) {
-      for (j <- this.grid(i).indices) {
-
-      }
-    }
-  }*/
-
 
   /** Displays the grid */
   def displayGrid(): Unit = {
