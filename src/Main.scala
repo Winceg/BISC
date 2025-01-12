@@ -11,12 +11,11 @@ object Main {
 
     /** Creates the players, with their start position */
     players(0) = new Player(1, 4, 4)
+    arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
     players(1) = new Player(2, 8, 6)
+    arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
 
     println(s"Number of players : ${players.length}")
-
-    arena.grid(6)(6) = "1"
-    arena.grid(10)(8) = "2"
 
     do {
       /** Displays the grid in the console */

@@ -1,6 +1,5 @@
 var cell: String = "t2"
 val player: String = "1"
-val temp: String = "t" + player
 var result: Int = 0
 
 cell match {
@@ -11,8 +10,6 @@ cell match {
 result
 
 class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
-  val startPos: Array[Int] = Array(startPosX, startPosY)
-
 }
 
 var player: Array[Player] = Array.ofDim(2)
@@ -26,7 +23,7 @@ player(1).playerID
 var losingPlayerID = player.find(p => p.playerID.toString == cell.substring(1)) map { player =>
   player.playerID
 }
-if(losingPlayerID != None) {
+if(losingPlayerID.isDefined) {
   losingPlayerID.toString.substring(5, 6)
 }else "0"
 
