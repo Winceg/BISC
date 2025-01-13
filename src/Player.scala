@@ -29,6 +29,16 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     }else{
       inputKey = lastDirection
     }
+    /*
+    Idée :
+    input.substring match
+    thisplayerid => inputKey = input.substring(0, 1)
+    up && lastdirection == down => inputkey = down
+    down && lastdirection == up => inputkey = up
+    right && lastdirection == left => inputkey = left
+    left && lastdirection == right => inputkey = right
+
+    * */
 
     println(s"InputKey : $inputKey")
 
