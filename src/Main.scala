@@ -4,33 +4,41 @@
 object Main {
   def main(args: Array[String]): Unit = {
     /** Creates the playing arena, with a given size */
-    val numberOfPlayers: Int = 2
-    val arena: Arena = new Arena(20)
-    val players: Array[Player] = Array.ofDim(numberOfPlayers)
+    val arena: Arena = new Arena(40)
+    var players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
+    var speed:Int = 400
 
-    val display = new GameDisplay(arena,20)
+    /** Creates a new fungraphics display */
+    val display = new GameDisplay(arena, 20)
 
-    /** Creates the players, with their start position */
-    players(0) = new Player(1, 4, 4)
+
+    /** Creates player1, with his start position */
+    players(0) = new Player(1, 4, 4, arena.gridSizeX, new KeyboardInput(display.a, players, 1))
     arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
-    players(1) = new Player(2, 8, 6)
+
+    /** Creates player1, with his start position */
+    players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
     arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
 
     println(s"Number of players : ${players.length}")
 
     do {
-      /** Displays the grid in the console */
-      arena.displayCroppedGrid()
-      display.gamePaintClock()
-      display.displayCroppedGrid()
-
       for (player <- players) {
+        /** Displays the grid in the console */
+        // Console display :
+        // arena.displayCroppedGrid()
+        display.gamePaintClock()
+
         /** Displays the player's score */
         println(s"Player ${player.playerID} : ${player.getScore(arena.grid)} pts")
 
+        /** Sets the player's direction based on keyboard input */
+        player.lastDirection = player.direction
+        if (player.keyboard.getReturnString().nonEmpty) player.direction = player.keyboard.getReturnString() else player.direction = player.lastDirection
+
         /** Asks the player for the next step, and updates the current position */
-        player.playerMove(arena.grid)
+        player.playerMove(arena.grid, player.direction)
 
         /** Determines the action based on the content of the cell */
         arena.action(player.currentPos, player.playerID.toString, players) match {
@@ -49,9 +57,9 @@ object Main {
           case s if s.startsWith("gop") =>
             players(players.indexWhere { p => p.playerID == s.substring(3).toInt }).gameOver = true
 
-
           /** If the cell is empty, sets the current cell to head ("x1") and the last to temp ("t1") */
           case "sp" =>
+
             /** Sets the current position of the player */
             arena.setCurrentPos(player.currentPos, player.playerID)
 
@@ -65,6 +73,7 @@ object Main {
       for (player <- players) {
         gameOver = gameOver || player.gameOver
       }
+      Thread.sleep(speed)
 
     } while (!gameOver)
 

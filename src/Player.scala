@@ -1,4 +1,4 @@
-class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
+class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int, val keyboard: KeyboardInput) {
 
   /** CONTENT : player movements + player score */
 
@@ -7,40 +7,56 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int) {
   val startPos: Array[Int] = Array(startPosX + 2, startPosY + 2)
   var currentPos: Array[Int] = startPos.clone()
   var lastPos: Array[Int] = currentPos.clone()
+  var direction: String = startDirection(arenaWidth)
+  var lastDirection: String = direction
   var score: Int = 0
   var gameOver: Boolean = false
 
+  /** Defines the starting direction based on the start position of a player */
+  def startDirection(arenaWidth: Int): String = {
+    if (startPosX < (arenaWidth / 2).toInt) "r" else "l"
+  }
+
   /** Gets user input and sets new current position */
-  def playerMove(grid: Array[Array[String]]): Unit = {
+  def playerMove(grid: Array[Array[String]], input: String): Unit = {
     this.lastPos = Array(this.currentPos: _*)
-    println(s"Player ${this.playerID}, enter direction :")
-    val input: String = Input.readString()
+    //    Console controls :
+    //    println(s"Player ${this.playerID}, enter direction :")
+    //    val input: String = Input.readString()
+    var inputKey: String = ""
+    if(input.substring(1) == this.playerID.toString) {
+      inputKey = input.substring(0, 1)
+    }else{
+      inputKey = lastDirection
+    }
+
+    println(s"InputKey : $inputKey")
 
     /** Matches player input to movements in the grid
      * Also ends the game if the player hits the wall (next position is outside the playing surface */
-    input match {
-      case "d" =>
+    inputKey match {
+      case "r" =>
         if ((this.currentPos(1) + 1) < grid.length - 2) {
           this.currentPos(1) = this.currentPos(1) + 1
         } else {
           this.gameOver = true
           println("You've hit the wall !")
         }
-      case "a" =>
+      case "l" =>
         if ((this.currentPos(1) - 1) >= 2) {
           this.currentPos(1) = this.currentPos(1) - 1
         } else {
           this.gameOver = true
-          println("You've hit the wall !")
+          println(s"Player${this.playerID}, you've hit the wall !")
         }
-      case "s" =>
+      case "d" =>
         if ((this.currentPos(0) + 1) < grid.length - 2) {
           this.currentPos(0) = this.currentPos(0) + 1
         } else {
           this.gameOver = true
           println("You've hit the wall !")
         }
-      case "w" =>
+      case "u" =>
         if ((this.currentPos(0) - 1) >= 2) {
           this.currentPos(0) = this.currentPos(0) - 1
         } else {
