@@ -2,15 +2,15 @@ import hevs.graphics.FunGraphics
 
 import java.awt.Color
 
-class GameDisplay (val arena : TestingArena,val sizeFactor : Int){
+class GameDisplay (val arena : Arena,val sizeFactor : Int){
 
   //fonction to kill the usless border and create a new array
-  val realSizeX : Int = arena.gridSizeX
-  val realSizeY : Int = arena.gridSizeY
+  val realSizeX : Int = arena.gridSizeX - 4
+  val realSizeY : Int = arena.gridSizeY - 4
   var arenaGraphik : Array[Array[String]] = Array.ofDim(realSizeX,realSizeY)
   for (i<- arenaGraphik.indices){
     for(j <- arenaGraphik(i).indices){
-      arenaGraphik(i)(j) = arena.grid(i+1)(j+1)
+      arenaGraphik(i)(j) = arena.grid(i+2)(j+2)
     }
   }
 
@@ -52,6 +52,14 @@ class GameDisplay (val arena : TestingArena,val sizeFactor : Int){
   //Method to check every cell and paint it in the right color
   def gamePaintClock(): Unit = {
     var colorToPaint : Color = cEmpty
+
+    /** Refreshing information from the data array */
+    for (i<- arenaGraphik.indices){
+      for(j <- arenaGraphik(i).indices){
+        arenaGraphik(i)(j) = arena.grid(i+2)(j+2)
+      }
+    }
+
     // first loop to see what's in the array and set the color we want to paint
     for(i<-arenaGraphik.indices){
       for(j<-arenaGraphik(i).indices){

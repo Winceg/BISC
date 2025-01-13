@@ -1,4 +1,4 @@
-class Arena(var gridSizeX: Int, var gridSizeY: Int) {
+class Arena(var gridSizeX: Int) {
   /** Class defining the whole arena, and functions to modify the cells on the arena */
   /** CONTENT : floodFill, arena state */
 
@@ -6,7 +6,7 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
    * Outer border with "-" limits the floodFill function, while inner border with "0" limits the movements of the player (this is the actual border of the arena)
    * The floodFill function is then able to move outside the playing border of the arena in order to flood all empty cells, for example when a player's surface separates the arena in 2 */
   gridSizeX += 4
-  gridSizeY += 4
+  var gridSizeY = gridSizeX
 
   /** Filling the grid with "*" as empty cells */
   var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
@@ -18,6 +18,7 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
       if (i == 1 && j > 1 || i == 1 && j < grid(0).length - 1 || i == grid.length - 2 && j != 0 || i == grid.length - 2 && j != grid(0).length - 1 || i != 0 && j == 1 || i != 0 && j == grid(0).length - 2) {
         grid(i)(j) = "0"
       }
+
       /** Outer border */
       if (i == 0 || i == grid.length - 1 || i != 0 && j == 0 || i != 0 && j == grid(0).length - 1) {
         grid(i)(j) = "-"
@@ -130,6 +131,16 @@ class Arena(var gridSizeX: Int, var gridSizeY: Int) {
   def displayGrid(): Unit = {
     for (i <- this.grid.indices) {
       for (j <- this.grid(i).indices) {
+        print(s" ${this.grid(i)(j)} ${if (this.grid(i)(j).length < 2) " " else ""}")
+      }
+      println()
+    }
+  }
+
+  /** Displays the grid */
+  def displayCroppedGrid(): Unit = {
+    for (i: Int <- 2 until this.grid.length - 2) {
+      for (j: Int <- 2 until this.grid(i).length - 2) {
         print(s" ${this.grid(i)(j)} ${if (this.grid(i)(j).length < 2) " " else ""}")
       }
       println()

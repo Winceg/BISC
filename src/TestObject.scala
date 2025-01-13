@@ -1,6 +1,6 @@
-object TestObject extends App{
+/*object TestObject extends App{
 
-  val a = new TestingArena(20,20)
+  val a = new Arena(20,20)
   a.grid(2)(2) = "1"
   a.grid(2)(3) = "t1"
   a.grid(2)(4) = "x1"
@@ -15,3 +15,5 @@ object TestObject extends App{
   b.gamePaintClock()
 
 }
+
+ */

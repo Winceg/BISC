@@ -5,9 +5,11 @@ object Main {
   def main(args: Array[String]): Unit = {
     /** Creates the playing arena, with a given size */
     val numberOfPlayers: Int = 2
-    val arena: Arena = new Arena(20, 20)
+    val arena: Arena = new Arena(20)
     val players: Array[Player] = Array.ofDim(numberOfPlayers)
     var gameOver: Boolean = false
+
+    val display = new GameDisplay(arena,20)
 
     /** Creates the players, with their start position */
     players(0) = new Player(1, 4, 4)
@@ -19,7 +21,9 @@ object Main {
 
     do {
       /** Displays the grid in the console */
-      arena.displayGrid()
+      arena.displayCroppedGrid()
+      display.gamePaintClock()
+      display.displayCroppedGrid()
 
       for (player <- players) {
         /** Displays the player's score */
