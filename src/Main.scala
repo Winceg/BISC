@@ -4,13 +4,13 @@
 object Main {
   def main(args: Array[String]): Unit = {
     /** Creates the playing arena, with a given size */
-    val arena: Arena = new Arena(40)
+    val arena: Arena = new Arena(30)
     var players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    var speed:Int = 500
+    var speed:Int = 100
 
     /** Creates a new fungraphics display */
-    val display = new GameDisplay(arena, 20)
+    val display = new GameDisplay(arena, 18)
 
 
     /** Creates player1, with his start position */
@@ -23,6 +23,14 @@ object Main {
 
     println(s"Number of players : ${players.length}")
 
+    /** MENU APPEAR , presse enter now
+    var inputKeyMenu = ""
+    display.menuScreen()
+    do {
+    } while (inputKeyMenu == "")
+    */
+
+    // ISERT HERE , 3 time launcing screen with a duration of 1 sec each//
     do {
       for (player <- players) {
         /** Displays the grid in the console */
@@ -76,6 +84,8 @@ object Main {
       Thread.sleep(speed)
 
     } while (!gameOver)
+    // insert here game over screen , with jump to menu screen on top of the programm
+    display.menuScreen()
 
     println("Game over !")
     for (player <- players) {

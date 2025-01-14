@@ -1,6 +1,6 @@
 import hevs.graphics.FunGraphics
 
-import java.awt.Color
+import java.awt.{Color, Font}
 
 class GameDisplay(val arena: Arena, val sizeFactor: Int) {
 
@@ -33,7 +33,11 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val cCapPlayer2 = new Color(180, 0, 0)
   val cTempPlayer2 = new Color(180, 100, 100)
   val cHeadPlayer2 = new Color(255, 0, 0)
-
+  //Create different fonts used in the game
+  val gameTitle: Font = new Font("Georgia", Font.BOLD, 50)
+  val title: Font = new Font("Georgia", Font.BOLD, 20)
+  val subtitle: Font = new Font("Georgia", Font.BOLD, 15)
+  val scoreTitle: Font = new Font("Georgia", Font.BOLD, 10)
   //create a graphic pixel version with a size factor
   val graphikGridX: Int = realSizeX * sizeFactor
   val graphikGridY: Int = (realSizeY + 1) * sizeFactor //content the space for score and more
@@ -84,5 +88,27 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
         }
       }
     }
+  }
+
+  def menuScreen(): Unit = {
+    println("menu")
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-60, graphikGridY/2-100,"BISC",gameTitle,cBorders)
+    a.drawString(graphikGridX/2-30, graphikGridY/2-20,"MENU",title,cBorders)
+    a.drawString(graphikGridX/2-100, graphikGridY/2+200,"Press enter to Start a Game",subtitle,cBorders)
+
+  }
+
+  def launchingScreen(): Unit = {
+    println("Launching")
+    a.drawString(graphikGridX/2-60, graphikGridY/2-100,"BISC",gameTitle,cBorders)
+  }
+
+  def gameOverScreen(): Unit = {
+    println("GameOver")
+  }
+
+  def pauseScreen (): Unit = {
+    println("Pause")
   }
 }
