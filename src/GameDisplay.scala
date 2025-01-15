@@ -44,18 +44,6 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val graphikGridY: Int = (realSizeY + 1) * sizeFactor //content the space for score and more
   val a = new FunGraphics(graphikGridX, graphikGridY, "BISC")
 
-  // paint the borders of the grid in black
-  for (i <- 0 to graphikGridX - 1) {
-    for (j <- 0 to graphikGridY - sizeFactor - 1) {
-      if (i == 0 || j == 0 || i % sizeFactor == 0 || j % sizeFactor == 0 || (i + 1) % sizeFactor == 0 || (j + 1) % sizeFactor == 0) {
-        a.setPixel(i, j, cBorders)
-      }
-      else {
-        a.setPixel(i, j, cEmpty)
-      }
-    }
-  }
-  //Add a menu feature or something in the bottom of the game
 
   //Method to check every cell and paint it in the right color
   def gamePaintClock(players : Array[Player]): Unit = {
@@ -70,6 +58,18 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     for (i <- arenaGraphik.indices) {
       for (j <- arenaGraphik(i).indices) {
         arenaGraphik(i)(j) = arena.grid(i + 2)(j + 2)
+      }
+    }
+
+    // paint the borders of the grid in black
+    for (i <- 0 to graphikGridX - 1) {
+      for (j <- 0 to graphikGridY - sizeFactor - 1) {
+        if (i == 0 || j == 0 || i % sizeFactor == 0 || j % sizeFactor == 0 || (i + 1) % sizeFactor == 0 || (j + 1) % sizeFactor == 0) {
+          a.setPixel(i, j, cBorders)
+        }
+        else {
+          a.setPixel(i, j, cEmpty)
+        }
       }
     }
 
