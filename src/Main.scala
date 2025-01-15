@@ -7,7 +7,7 @@ object Main {
     val arena: Arena = new Arena(30)
     var players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    var speed:Int = 400
+    var speed: Int = 400
 
     /** Creates a new fungraphics display */
     val display = new GameDisplay(arena, 18)
@@ -21,15 +21,18 @@ object Main {
     players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
     arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
 
+    val mainKeyboard: KeyboardInput = new KeyboardInput(display.a, players, 0)
+
     println(s"Number of players : ${players.length}")
 
-    /** MENU APPEAR , presse enter now
-    var inputKeyMenu = ""
-    display.menuScreen()
-    do {
-    } while (inputKeyMenu == "")
-    */
-
+    /** MENU APPEAR , press enter now
+     * var inputKeyMenu = ""
+     * display.menuScreen()
+     * do {
+     * } while (inputKeyMenu == "")
+     */
+    display.menuScreen(mainKeyboard)
+    display.launchingScreen()
 
     // ISERT HERE , 3 time launcing screen with a duration of 1 sec each//
     //display.launchingScreen()
@@ -85,7 +88,7 @@ object Main {
 
     } while (!gameOver)
     // insert here game over screen , with jump to menu screen on top of the programm
-    display.menuScreen()
+    display.menuScreen(mainKeyboard)
 
     println("Game over !")
     for (player <- players) {
