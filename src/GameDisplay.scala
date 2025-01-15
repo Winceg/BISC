@@ -33,6 +33,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val cCapPlayer2 = new Color(180, 0, 0)
   val cTempPlayer2 = new Color(180, 100, 100)
   val cHeadPlayer2 = new Color(255, 0, 0)
+  val cCounter = new Color(20,100,255)
   //Create different fonts used in the game
   val gameTitle: Font = new Font("Georgia", Font.BOLD, 50)
   val title: Font = new Font("Georgia", Font.BOLD, 20)
@@ -57,8 +58,13 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   //Add a menu feature or something in the bottom of the game
 
   //Method to check every cell and paint it in the right color
-  def gamePaintClock(): Unit = {
+  def gamePaintClock(players : Array[Player]): Unit = {
     var colorToPaint: Color = cEmpty
+    var i: Int = 2
+    for(player <- players) {
+      a.drawString(graphikGridX + sizeFactor * i, graphikGridY - 20, s"Score P${player.playerID} : ${player.score}", scoreTitle, cCapPlayer1)
+      i += 5
+    }
 
     /** Refreshing information from the data array */
     for (i <- arenaGraphik.indices) {
@@ -90,25 +96,62 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     }
   }
 
-  def menuScreen(): Unit = {
+  def menuScreen(keyboard: KeyboardInput): Unit = {
     println("menu")
+    var input : String = ""
     a.clear(cEmpty)
     a.drawString(graphikGridX/2-60, graphikGridY/2-100,"BISC",gameTitle,cBorders)
     a.drawString(graphikGridX/2-30, graphikGridY/2-20,"MENU",title,cBorders)
     a.drawString(graphikGridX/2-100, graphikGridY/2+200,"Press enter to Start a Game",subtitle,cBorders)
-
+    do {
+      input = keyboard.getReturnString()
+      Thread.sleep(100)
+    } while (input != "enter")
+    a.clear(cEmpty)
   }
 
   def launchingScreen(): Unit = {
     println("Launching")
-    a.drawString(graphikGridX/2-60, graphikGridY/2-100,"BISC",gameTitle,cBorders)
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-20, graphikGridY/2-10,"3",gameTitle, cCounter)
+    Thread.sleep(1000)
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-20, graphikGridY/2-10,"2",gameTitle,cCounter)
+    Thread.sleep(1000)
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-20, graphikGridY/2-10,"1",gameTitle,cCounter)
+    Thread.sleep(1000)
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-40, graphikGridY/2-10,"GO",gameTitle,cHeadPlayer1)
+    Thread.sleep(1000)
+    a.clear(cEmpty)
+
   }
 
-  def gameOverScreen(): Unit = {
+  def gameOverScreen(keyboard: KeyboardInput, winnerPlayer: String): Unit = {
+    var input : String = ""
     println("GameOver")
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-160, graphikGridY/2-100,"GAME OVER",gameTitle, cHeadPlayer2)
+    a.drawString(graphikGridX/2-30, graphikGridY/2+150,s"Player $winnerPlayer win",subtitle,cBorders)
+    a.drawString(graphikGridX/2-140, graphikGridY/2+200,"Press enter to go in the Menu",title,cBorders)
+    do {
+      input = keyboard.getReturnString()
+      Thread.sleep(100)
+    } while (input != "enter")
+    a.clear(cEmpty)
   }
 
-  def pauseScreen (): Unit = {
+  def pauseScreen (keyboard: KeyboardInput): Unit = {
+    var input : String = ""
     println("Pause")
+    a.clear(cEmpty)
+    a.drawString(graphikGridX/2-85, graphikGridY/2-100,"PAUSE",gameTitle, cBorders)
+    a.drawString(graphikGridX/2-100, graphikGridY/2+200,"Press enter to resume",title,cBorders)
+    do {
+      input = keyboard.getReturnString()
+      Thread.sleep(100)
+    } while (input != "enter")
+    a.clear(cEmpty)
   }
 }
