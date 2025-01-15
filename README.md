@@ -1,8 +1,13 @@
-//game description
+<h1>Game description</h1>
+///////     insert game description here !      ///////
+
 ![Screenshot start](https://github.com/user-attachments/assets/88017cba-ef6c-48f1-ad38-0389f93d868b)
+![Screenshot menu](https://github.com/user-attachments/assets/535c8fb2-f04e-4284-955a-009e0c4bbd2e)
+![Screenshot in-game](https://github.com/user-attachments/assets/77eadaf9-4b90-4f16-9fe9-0ee62ea37e33)
+![Screenshot game over](https://github.com/user-attachments/assets/1e8dd525-976d-4063-920e-81b7348ff035)
 
-//user manual
-
+<h1>User manual</h1>
+///////     insert user manual here !      ///////
 
 <h1>Code explanation :</h1>
 
