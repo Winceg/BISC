@@ -1,6 +1,6 @@
 class Arena(var gridSizeX: Int) {
   /** Class defining the whole arena, and functions to modify the cells on the arena */
-  /** CONTENT : floodFill, arena state */
+  /** CONTENT : arena reset, floodFill, set current player position, set temporary position (tail), action based on current position cell content */
 
   /** Adding room for a double border around the grid
    * Outer border with "-" limits the floodFill function, while inner border with "0" limits the movements of the player (this is the actual border of the arena)
@@ -10,9 +10,9 @@ class Arena(var gridSizeX: Int) {
   var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
 
   /** Filling the grid with "*" as empty cells */
-    def resetGrid() {
-      this.grid = Array.fill(gridSizeX, gridSizeY)("*")
-    }
+  def resetGrid() {
+    this.grid = Array.fill(gridSizeX, gridSizeY)("*")
+  }
 
   /** Turning border "*" to "-" */
   for (i <- this.grid.indices) {
@@ -65,7 +65,8 @@ class Arena(var gridSizeX: Int) {
       }
     }
 
-    //whole section not understood
+    /** Starts in a corner of the border, and explores every possible cell, turns its content into a
+     * temporary fill, in order to fill the rest of the cells with the player's ID */
     while (stack.nonEmpty) {
       val (x, y) = stack.pop()
 
@@ -129,25 +130,4 @@ class Arena(var gridSizeX: Int) {
         "sp" // Returns "sp" for set positions
     }
   }
-
-  /** Displays the grid */
-  def displayGrid(): Unit = {
-    for (i <- this.grid.indices) {
-      for (j <- this.grid(i).indices) {
-        print(s" ${this.grid(i)(j)} ${if (this.grid(i)(j).length < 2) " " else ""}")
-      }
-      println()
-    }
-  }
-
-  /** Displays the grid */
-  def displayCroppedGrid(): Unit = {
-    for (i: Int <- 2 until this.grid.length - 2) {
-      for (j: Int <- 2 until this.grid(i).length - 2) {
-        print(s" ${this.grid(i)(j)} ${if (this.grid(i)(j).length < 2) " " else ""}")
-      }
-      println()
-    }
-  }
-
 }

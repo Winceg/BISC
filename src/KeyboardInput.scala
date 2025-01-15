@@ -4,14 +4,12 @@ import java.awt.event.{KeyAdapter, KeyEvent}
 class KeyboardInput(val fg: FunGraphics, val players: Array[Player], playerID: Int) {
   var returnString: String = ""
 
-  /**
-   * This class demonstrate how to implement keyboard events
-   * using the FunGraphics library.
-   */
+  /** Sets the return string that the game will need to perform actions */
   def setReturnString(returnString: String): Unit = {
     this.returnString = returnString
   }
 
+  /** Returns the string that the game will need to perform actions */
   def getReturnString(): String = {
     this.returnString
   }

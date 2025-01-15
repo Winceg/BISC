@@ -1,6 +1,6 @@
 class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int, val keyboard: KeyboardInput) {
 
-  /** CONTENT : player movements + player score */
+  /** CONTENT : player reset, start direction, player movements, get player score */
 
   /** Class defining the player attributes and functions */
   val startPos: Array[Int] = Array(startPosX + 2, startPosY + 2)
@@ -20,7 +20,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     this.gameOver = false
   }
 
-  /** Defines the starting direction based on the start position of a player */
+  /** Defines the starting direction based on the start position of a player (i.e. if player starts in the left half of the arena, his start direction is right)  */
   def startDirection(arenaWidth: Int): String = {
     if (startPosX < (arenaWidth / 2)) "r" + this.playerID else "l" + this.playerID
   }
@@ -99,7 +99,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     }
   }
 
-  /** Counts the number of captured cells */
+  /** Counts the number of captured cells and returns the player's score */
   def getScore(grid: Array[Array[String]]): Int = {
     this.score = 0
     for (i <- grid.indices) {
