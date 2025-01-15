@@ -7,7 +7,7 @@ object Main {
     val arena: Arena = new Arena(30)
     var players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    var speed:Int = 100
+    var speed: Int = 400
 
     /** Creates a new fungraphics display */
     val display = new GameDisplay(arena, 18)
@@ -21,12 +21,22 @@ object Main {
     players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
     arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
 
+    val mainKeyboard: KeyboardInput = new KeyboardInput(display.a, players, 0)
+
     println(s"Number of players : ${players.length}")
 
-    // display the menu
-    display.menuScreen()
+    /** MENU APPEAR , press enter now
+     * var inputKeyMenu = ""
+     * display.menuScreen()
+     * do {
+     * } while (inputKeyMenu == "")
+     */
+    display.menuScreen(mainKeyboard)
+    display.launchingScreen()
 
     // ISERT HERE , 3 time launcing screen with a duration of 1 sec each//
+    //display.launchingScreen()
+
     do {
       for (player <- players) {
         /** Displays the grid in the console */
@@ -34,15 +44,12 @@ object Main {
         // arena.displayCroppedGrid()
         display.gamePaintClock()
 
-        /** Displays the player's score */
-        println(s"Player ${player.playerID} : ${player.getScore(arena.grid)} pts")
-
         /** Sets the player's direction based on keyboard input */
         player.lastDirection = player.direction
         if (player.keyboard.getReturnString().nonEmpty) player.direction = player.keyboard.getReturnString() else player.direction = player.lastDirection
 
         /** Asks the player for the next step, and updates the current position */
-        player.playerMove(arena.grid, player.direction)
+        player.playerMove(arena.grid)
 
         /** Determines the action based on the content of the cell */
         arena.action(player.currentPos, player.playerID.toString, players) match {
@@ -81,10 +88,7 @@ object Main {
 
     } while (!gameOver)
     // insert here game over screen , with jump to menu screen on top of the programm
-
-    display.pauseScreen()
-    display.launchingScreen()
-    display.gameOverScreen()
+    display.menuScreen(mainKeyboard)
 
     println("Game over !")
     for (player <- players) {

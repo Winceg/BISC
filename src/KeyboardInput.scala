@@ -47,19 +47,10 @@ class KeyboardInput(val fg: FunGraphics, val players: Array[Player], playerID: I
         if (e.getKeyChar == 's') setReturnString("d" + players(1).playerID)
       }
 
-      if (e.getKeyCode == KeyEvent.VK_ESCAPE) setReturnString("esc")
-      if (e.getKeyCode == KeyEvent.VK_ENTER) setReturnString("enter")
+      if (playerID == 0) {
+        if (e.getKeyCode == KeyEvent.VK_ESCAPE) setReturnString("esc")
+        if (e.getKeyCode == KeyEvent.VK_ENTER) setReturnString("enter")
+      }
     }
   })
-
-
-  /*
-  while (true) {
-    fg.clear()
-    //draw our object
-    fg.drawRect(50 + yOffset * 2, 50 + xOffset * 2, 75, 75)
-    //refresh the screen at 60 FPS
-    fg.syncGameLogic(60)
-  }*/
-
 }
