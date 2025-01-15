@@ -3,7 +3,7 @@ import hevs.graphics.FunGraphics
 import java.awt.{Color, Font}
 
 class GameDisplay(val arena: Arena, val sizeFactor: Int) {
-
+  // test commit push
   //fonction to kill the usless border and create a new array
   val realSizeX: Int = arena.gridSizeX - 4
   val realSizeY: Int = arena.gridSizeY - 4
