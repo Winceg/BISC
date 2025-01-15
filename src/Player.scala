@@ -28,9 +28,6 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
   /** Gets user input and sets new current position */
   def playerMove(grid: Array[Array[String]]): Unit = {
     this.lastPos = Array(this.currentPos: _*)
-    //    Console controls :
-    //    println(s"Player ${this.playerID}, enter direction :")
-    //    val input: String = Input.readString()
     var inputKey: String = ""
 
     if (this.direction.substring(1) == this.playerID.toString) {

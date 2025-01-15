@@ -37,7 +37,7 @@ object Main {
           /** Displays the grid in the console */
           // Console display :
           // arena.displayCroppedGrid()
-          display.gamePaintClock(players)
+          display.gamePaintClock(players, arena)
 
           /** Sets the player's direction based on keyboard input */
           player.lastDirection = player.direction
@@ -89,13 +89,15 @@ object Main {
       }
       display.gameOverScreen(mainKeyboard, winner)
 
+      /** Resetting all game parameters */
       arena.resetGrid()
       for(player <- players){
         player.reset()
       }
+      gameOver = false
 
+      /** Exit the game */
       game = if (mainKeyboard.getReturnString() == "esc") false else true
-      //display.a.
 
     } while (game)
   }
