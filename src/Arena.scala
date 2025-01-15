@@ -118,7 +118,6 @@ class Arena(var gridSizeX: Int) {
 
       /** If cell matches "t" + the player's ID, he hit his own tail and the game is over */
       case s if s == s"t$playerID" =>
-        println(s"Player$playerID, you hit your own tail !")
         "go" // Returns "go" for game over
 
       /** If cell matches "t" + another player's ID, the game is over and the other player loses */

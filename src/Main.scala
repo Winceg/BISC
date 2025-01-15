@@ -11,17 +11,17 @@ object Main {
     /** Creates a new FunGraphics display */
     val display = new GameDisplay(arena, 18)
 
+    val mainKeyboard: KeyboardInput = new KeyboardInput(display.a, players, 0)
+
+    /** Creates player1, with his start position */
+    players(0) = new Player(1, 4, 4, arena.gridSizeX, new KeyboardInput(display.a, players, 1))
+    arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
+
+    /** Creates player2, with his start position */
+    players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
+    arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
+
     do {
-      val mainKeyboard: KeyboardInput = new KeyboardInput(display.a, players, 0)
-
-      /** Creates player1, with his start position */
-      players(0) = new Player(1, 4, 4, arena.gridSizeX, new KeyboardInput(display.a, players, 1))
-      arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
-
-      /** Creates player2, with his start position */
-      players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
-      arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
-
       /** Menu appears, followed by the launch screen */
       display.menuScreen(mainKeyboard)
       display.launchingScreen()

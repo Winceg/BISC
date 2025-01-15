@@ -18,6 +18,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     this.direction = startDirection(arenaWidth)
     this.lastDirection = this.direction
     this.gameOver = false
+    this.keyboard.setReturnString(this.direction)
   }
 
   /** Defines the starting direction based on the start position of a player (i.e. if player starts in the left half of the arena, his start direction is right)  */
