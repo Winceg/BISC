@@ -30,7 +30,10 @@ object Main {
     } while (inputKeyMenu == "")
     */
 
+
     // ISERT HERE , 3 time launcing screen with a duration of 1 sec each//
+    //display.launchingScreen()
+
     do {
       for (player <- players) {
         /** Displays the grid in the console */
