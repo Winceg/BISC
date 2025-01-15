@@ -90,34 +90,17 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     }
   }
 
-  def menuScreen(keyboard: KeyboardInput): Unit = {
-    var input: String = ""
-
+  def menuScreen(): Unit = {
     println("menu")
     a.clear(cEmpty)
     a.drawString(graphikGridX / 2 - 60, graphikGridY / 2 - 100, "BISC", gameTitle, cBorders)
     a.drawString(graphikGridX / 2 - 30, graphikGridY / 2 - 20, "MENU", title, cBorders)
     a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 200, "Press enter to Start a Game", subtitle, cBorders)
 
-    do {
-      input = keyboard.getReturnString()
-      Thread.sleep(500)
-    } while (input != "enter")
-    a.clear(cEmpty)
   }
 
   def launchingScreen(): Unit = {
     println("Launching")
-    var timer = 3
-    do {
-      println(s"timer : $timer")
-      a.clear(cEmpty)
-      a.drawString(graphikGridX / 2 - 60, graphikGridY / 2 - 100, "BISC", gameTitle, cBorders)
-      a.drawString(graphikGridX / 2 - 30, graphikGridY / 2 - 20, s"Game starting in $timer", title, cBorders)
-      timer -= 1
-      Thread.sleep(1000)
-    } while (timer > 0)
-    a.clear(cEmpty)
   }
 
   def gameOverScreen(): Unit = {

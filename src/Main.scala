@@ -31,6 +31,7 @@ object Main {
      * do {
      * } while (inputKeyMenu == "")
      */
+    /** Menu page appears  */
     display.menuScreen(mainKeyboard)
     display.launchingScreen()
 
@@ -94,5 +95,11 @@ object Main {
     for (player <- players) {
       if (!player.gameOver) println(s"Player${player.playerID} wins !")
     }
+
+    var winner: String = ""
+    for (player <- players) {
+      if (!player.gameOver) winner = player.playerID.toString
+    }
+
   }
 }
