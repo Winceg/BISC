@@ -7,7 +7,31 @@
 ![Screenshot game over](https://github.com/user-attachments/assets/1e8dd525-976d-4063-920e-81b7348ff035)
 
 <h1>User manual</h1>
-///////     insert user manual here !      ///////
+
+To play BISC
+
+Commands:
+Player1 : arrow keys, up , down, left, right
+Player2 : WASD, w=up, s=down, a=left, d=right
+-> Press enter on the Menu
+After 3 seconds the game will start
+
+Your Goal ?
+- Capture more terrain than your opponent and avoid dying.
+
+How to capture ? 
+- Make a path on the grid , and reach back a territory you already captured. Everything inside the polygon you've draw will be yours !
+- Each square captured is one point, the player to win is the one with the higher score
+
+How to die ? (end the game)
+- Reach out the border
+- Cut your own capturing line
+- Your own capturing line is cut by the other player
+
+Once the game is over , you can see all players scores
+-> Press enter to go back to the menu
+-> Press escape to quit the program
+
 
 <h1>Code explanation :</h1>
 
@@ -48,8 +72,16 @@ Checks if the starting position is in the left or right side of the arena and de
 
 <h2>The GameDisplay class</h2>
 
-///////     insert code description here !      ///////
-///////     insert code description here !      ///////
+The GameDisplay Class is the Class who will generate all Graphical content of the game based on all the data we've in the other classes.
+
+Once Created , the Arena Array is cropped to be used and drawed later.
+All Color and font are declared and a new Fungraphic Instance is created.
+
+gamePaintClock, is the method called every frame to redraw the entire arena , based on the values of the Arena.grid Array.
+It also draw the black separation lines. (note: it can be optimized to avoid flickering).
+Its basicly a loop that take the array , amplify with a choosen factor, and draw a grid of the right dimension , the size depends of the choosen factor.
+
+menuScreen, pauseScreen, launchScreen and gameOverScreen , are methods used and called whenever we need to display each specific state of the game.
 
 <h2>The KeyboardInput class</h2>
 This class is responsible for listening to the keyboard inputs and returning the direction to each player.

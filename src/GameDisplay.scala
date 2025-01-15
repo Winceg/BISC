@@ -148,6 +148,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     a.clear(cEmpty)
   }
 
+  // pause screen but not used
   def pauseScreen(keyboard: KeyboardInput): Unit = {
     var input: String = ""
     println("Pause")

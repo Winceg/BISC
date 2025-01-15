@@ -6,7 +6,7 @@ object Main {
     val arena: Arena = new Arena(40)
     val players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    val speed: Int = 200
+    val speed: Int = 150
 
     /** Creates a new FunGraphics display */
     val display = new GameDisplay(arena, 18)
