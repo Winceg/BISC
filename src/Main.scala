@@ -23,12 +23,8 @@ object Main {
 
     println(s"Number of players : ${players.length}")
 
-    /** MENU APPEAR , presse enter now
-    var inputKeyMenu = ""
+    // display the menu
     display.menuScreen()
-    do {
-    } while (inputKeyMenu == "")
-    */
 
     // ISERT HERE , 3 time launcing screen with a duration of 1 sec each//
     do {
@@ -85,7 +81,10 @@ object Main {
 
     } while (!gameOver)
     // insert here game over screen , with jump to menu screen on top of the programm
-    display.menuScreen()
+
+    display.pauseScreen()
+    display.launchingScreen()
+    display.gameOverScreen()
 
     println("Game over !")
     for (player <- players) {
