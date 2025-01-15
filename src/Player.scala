@@ -71,28 +71,24 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
           this.currentPos(1) = this.currentPos(1) + 1
         } else {
           this.gameOver = true
-          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case "l" =>
         if ((this.currentPos(1) - 1) >= 2) {
           this.currentPos(1) = this.currentPos(1) - 1
         } else {
           this.gameOver = true
-          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case "d" =>
         if ((this.currentPos(0) + 1) < grid.length - 2) {
           this.currentPos(0) = this.currentPos(0) + 1
         } else {
           this.gameOver = true
-          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case "u" =>
         if ((this.currentPos(0) - 1) >= 2) {
           this.currentPos(0) = this.currentPos(0) - 1
         } else {
           this.gameOver = true
-          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case _ =>
         println("Saisie non valide")

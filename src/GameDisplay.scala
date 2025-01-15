@@ -3,8 +3,7 @@ import hevs.graphics.FunGraphics
 import java.awt.{Color, Font}
 
 class GameDisplay(val arena: Arena, val sizeFactor: Int) {
-  // test commit push
-  //fonction to kill the usless border and create a new array
+  /** Creates a new array without the borders */
   val realSizeX: Int = arena.gridSizeX - 4
   val realSizeY: Int = arena.gridSizeY - 4
   var arenaGraphik: Array[Array[String]] = Array.ofDim(realSizeX, realSizeY)
@@ -14,7 +13,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     }
   }
 
-  //Create different color used in the game
+  /** Creates the different colors used in the game */
   val cEmpty = new Color(255, 255, 255)
   val cBorders = new Color(0, 0, 0)
   val cCapPlayer1 = new Color(0, 180, 0)
@@ -35,7 +34,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val a = new FunGraphics(graphikGridX, graphikGridY, "BISC")
 
 
-  //Method to check every cell and paint it in the right color
+  /** Method to check every cell and paint it in the right color */
   def gamePaintClock(players: Array[Player], arena: Arena): Unit = {
     var colorToPaint: Color = cEmpty
     var i: Int = 2
@@ -51,9 +50,9 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
       }
     }
 
-    // paint the borders of the grid in black
-    for (i <- 0 to graphikGridX - 1) {
-      for (j <- 0 to graphikGridY - sizeFactor - 1) {
+    /** Paints the borders of the grid in black */
+    for (i <- 0 until graphikGridX) {
+      for (j <- 0 until graphikGridY - sizeFactor) {
         if (i == 0 || j == 0 || i % sizeFactor == 0 || j % sizeFactor == 0 || (i + 1) % sizeFactor == 0 || (j + 1) % sizeFactor == 0) {
           a.setPixel(i, j, cBorders)
         }
@@ -63,7 +62,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
       }
     }
 
-    // first loop to see what's in the array and set the color we want to paint
+    /** First loop to see what's in the array and set the color we want to paint */
     for (i <- arenaGraphik.indices) {
       for (j <- arenaGraphik(i).indices) {
         arenaGraphik(i)(j) match {
@@ -76,7 +75,8 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
           case "t2" => colorToPaint = cTempPlayer2
           case "x2" => colorToPaint = cHeadPlayer2
         }
-        // second loop to color each pixel on the graphic right spot
+
+        /** Second loop to color each pixel on the graphic right spot */
         for (k <- 1 to sizeFactor - 2) {
           for (l <- 1 to sizeFactor - 2) {
             a.setPixel(j * sizeFactor + k, i * sizeFactor + l, colorToPaint)
@@ -86,13 +86,16 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     }
   }
 
+  /** Displays the start menu and waits for the user to press "enter" */
   def menuScreen(keyboard: KeyboardInput): Unit = {
-    println("menu")
+
     var input: String = ""
     a.clear(cEmpty)
     a.drawString(graphikGridX / 2 - 60, graphikGridY / 2 - 100, "BISC", gameTitle, cBorders)
     a.drawString(graphikGridX / 2 - 30, graphikGridY / 2 - 20, "MENU", title, cBorders)
     a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 200, "Press enter to Start a Game", subtitle, cBorders)
+
+    /** Waits until the user presses the "enter" key */
     do {
       input = keyboard.getReturnString()
       Thread.sleep(100)
@@ -101,8 +104,9 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     a.clear(cEmpty)
   }
 
+  /** Displays a countdown before the game starts */
   def launchingScreen(): Unit = {
-    println("Launching")
+
     a.clear(cEmpty)
     a.drawString(graphikGridX / 2 - 20, graphikGridY / 2 - 10, "3", gameTitle, cCounter)
     Thread.sleep(1000)
@@ -119,16 +123,26 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
 
   }
 
-  def gameOverScreen(keyboard: KeyboardInput, winnerPlayer: String): Unit = {
+  /** Displays the game over screen, with the winner */
+  def gameOverScreen(keyboard: KeyboardInput, winnerPlayer: String, players: Array[Player], arena: Arena): Unit = {
     var input: String = ""
-    println("GameOver")
+
     a.clear(cEmpty)
-    a.drawString(graphikGridX / 2 - 160, graphikGridY / 2 - 100, "GAME OVER", gameTitle, cHeadPlayer2)
-    a.drawString(graphikGridX / 2 - 30, graphikGridY / 2 + 150, s"Player $winnerPlayer win", subtitle, cBorders)
-    a.drawString(graphikGridX / 2 - 140, graphikGridY / 2 + 200, "Press enter to go in the Menu", title, cBorders)
+    a.drawString(graphikGridX / 2 - 170, graphikGridY / 2 - 100, "GAME OVER", gameTitle, cHeadPlayer2)
+    a.drawString(graphikGridX / 2 - 55, graphikGridY / 2 + 65, s"Player$winnerPlayer wins!", subtitle, cBorders)
+    var i =0
+    for (player <- players) {
+      a.drawString(graphikGridX / 2 - 45, graphikGridY / 2 + 90 + i * 25, s"Player${player.playerID} : ${player.getScore(arena.grid)}", subtitle, cBorders)
+      i += 1
+    }
+    a.drawString(graphikGridX / 2 - 125, graphikGridY / 2 + 200, "Press enter to start again", title, cBorders)
+    a.drawString(graphikGridX / 2 - 80, graphikGridY / 2 + 225, "Press esc to exit", title, cBorders)
+
+    /** Waits for user input, if enter starts a new game, if esc exits the game */
     do {
       input = keyboard.getReturnString()
       Thread.sleep(100)
+      if(input == "esc") System.exit(-1)
     } while (input != "enter")
     keyboard.setReturnString("")
     a.clear(cEmpty)

@@ -1,17 +1,14 @@
-
-/*import BISC.{Arena, Player}*/
-
 object Main {
   def main(args: Array[String]): Unit = {
     var game: Boolean = true
 
     /** Creates the playing arena, with a given size */
-    val arena: Arena = new Arena(30)
+    val arena: Arena = new Arena(40)
     val players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    var speed: Int = 400
+    val speed: Int = 200
 
-    /** Creates a new fungraphics display */
+    /** Creates a new FunGraphics display */
     val display = new GameDisplay(arena, 18)
 
     do {
@@ -21,22 +18,17 @@ object Main {
       players(0) = new Player(1, 4, 4, arena.gridSizeX, new KeyboardInput(display.a, players, 1))
       arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
 
-      /** Creates player1, with his start position */
+      /** Creates player2, with his start position */
       players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
       arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
 
-
-      println(s"Number of players : ${players.length}")
-
-      /** Menu appears */
+      /** Menu appears, followed by the launch screen */
       display.menuScreen(mainKeyboard)
       display.launchingScreen()
 
       do {
         for (player <- players) {
           /** Displays the grid in the console */
-          // Console display :
-          // arena.displayCroppedGrid()
           display.gamePaintClock(players, arena)
 
           /** Sets the player's direction based on keyboard input */
@@ -48,7 +40,6 @@ object Main {
 
           /** Determines the action based on the content of the cell */
           arena.action(player.currentPos, player.playerID.toString, players) match {
-
             /** If the cell is a player's own captured cell, executes the floodFill to validate temporary captured cells */
             case "ff" =>
               arena.floodFill(player.playerID) // Flood fills all cells that are outside the perimeter of the player's surface
@@ -65,7 +56,6 @@ object Main {
 
             /** If the cell is empty, sets the current cell to head ("x1") and the last to temp ("t1") */
             case "sp" =>
-
               /** Sets the current position of the player */
               arena.setCurrentPos(player.currentPos, player.playerID)
 
@@ -87,11 +77,11 @@ object Main {
       for (player <- players) {
         if (!player.gameOver) winner = player.playerID.toString
       }
-      display.gameOverScreen(mainKeyboard, winner)
+      display.gameOverScreen(mainKeyboard, winner, players, arena)
 
       /** Resetting all game parameters */
       arena.resetGrid()
-      for(player <- players){
+      for (player <- players) {
         player.reset()
       }
       gameOver = false
