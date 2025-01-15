@@ -7,9 +7,12 @@ class Arena(var gridSizeX: Int) {
    * The floodFill function is then able to move outside the playing border of the arena in order to flood all empty cells, for example when a player's surface separates the arena in 2 */
   gridSizeX += 4
   var gridSizeY = gridSizeX
+  var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
 
   /** Filling the grid with "*" as empty cells */
-  var grid: Array[Array[String]] = Array.fill(gridSizeX, gridSizeY)("*")
+    def resetGrid() {
+      this.grid = Array.fill(gridSizeX, gridSizeY)("*")
+    }
 
   /** Turning border "*" to "-" */
   for (i <- this.grid.indices) {

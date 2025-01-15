@@ -2,7 +2,6 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
 
   /** CONTENT : player movements + player score */
 
-
   /** Class defining the player attributes and functions */
   val startPos: Array[Int] = Array(startPosX + 2, startPosY + 2)
   var currentPos: Array[Int] = startPos.clone()
@@ -12,9 +11,18 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
   var score: Int = 0
   var gameOver: Boolean = false
 
+  def reset(): Unit = {
+    this.currentPos = startPos.clone()
+    this.lastPos = currentPos.clone()
+    this.score = 0
+    this.direction = startDirection(arenaWidth)
+    this.lastDirection = this.direction
+    this.gameOver = false
+  }
+
   /** Defines the starting direction based on the start position of a player */
   def startDirection(arenaWidth: Int): String = {
-    if (startPosX < (arenaWidth / 2).toInt) "r" + this.playerID else "l" + this.playerID
+    if (startPosX < (arenaWidth / 2)) "r" + this.playerID else "l" + this.playerID
   }
 
   /** Gets user input and sets new current position */
@@ -25,30 +33,30 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     //    val input: String = Input.readString()
     var inputKey: String = ""
 
-    println(s"Input: ${this.direction}")
     if (this.direction.substring(1) == this.playerID.toString) {
       inputKey = this.direction.substring(0, 1)
+
       /** Matches keyboard input with direction, checks and ignores if opposite direction is pressed */
       inputKey match {
-        case "u" => if(this.lastDirection.substring(0, 1) == "d") {
+        case "u" => if (this.lastDirection.substring(0, 1) == "d") {
           inputKey = "d"
           this.direction = this.lastDirection
         } else {
           inputKey = "u"
         }
-        case "d" => if(this.lastDirection.substring(0, 1) == "u") {
+        case "d" => if (this.lastDirection.substring(0, 1) == "u") {
           inputKey = "u"
           this.direction = this.lastDirection
         } else {
           inputKey = "d"
         }
-        case "l" => if(this.lastDirection.substring(0, 1) == "r") {
+        case "l" => if (this.lastDirection.substring(0, 1) == "r") {
           inputKey = "r"
           this.direction = this.lastDirection
-        }else {
+        } else {
           inputKey = "l"
         }
-        case "r" => if(this.lastDirection.substring(0, 1) == "l") {
+        case "r" => if (this.lastDirection.substring(0, 1) == "l") {
           inputKey = "l"
           this.direction = this.lastDirection
         } else {
@@ -66,12 +74,11 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
           this.currentPos(1) = this.currentPos(1) + 1
         } else {
           this.gameOver = true
-          println("You've hit the wall !")
+          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case "l" =>
         if ((this.currentPos(1) - 1) >= 2) {
           this.currentPos(1) = this.currentPos(1) - 1
-          println(s"P${this.playerID} move left")
         } else {
           this.gameOver = true
           println(s"Player${this.playerID}, you've hit the wall !")
@@ -81,14 +88,14 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
           this.currentPos(0) = this.currentPos(0) + 1
         } else {
           this.gameOver = true
-          println("You've hit the wall !")
+          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case "u" =>
         if ((this.currentPos(0) - 1) >= 2) {
           this.currentPos(0) = this.currentPos(0) - 1
         } else {
           this.gameOver = true
-          println("You've hit the wall !")
+          println(s"Player${this.playerID}, you've hit the wall !")
         }
       case _ =>
         println("Saisie non valide")

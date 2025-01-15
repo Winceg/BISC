@@ -107,6 +107,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
       input = keyboard.getReturnString()
       Thread.sleep(100)
     } while (input != "enter")
+    keyboard.setReturnString("")
     a.clear(cEmpty)
   }
 
@@ -139,6 +140,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
       input = keyboard.getReturnString()
       Thread.sleep(100)
     } while (input != "enter")
+    keyboard.setReturnString("")
     a.clear(cEmpty)
   }
 
@@ -152,6 +154,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
       input = keyboard.getReturnString()
       Thread.sleep(100)
     } while (input != "enter")
+    keyboard.setReturnString("")
     a.clear(cEmpty)
   }
 }
