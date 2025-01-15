@@ -7,7 +7,7 @@ object Main {
     val arena: Arena = new Arena(30)
     var players: Array[Player] = Array.ofDim(2)
     var gameOver: Boolean = false
-    var speed:Int = 100
+    var speed:Int = 400
 
     /** Creates a new fungraphics display */
     val display = new GameDisplay(arena, 18)
@@ -38,15 +38,12 @@ object Main {
         // arena.displayCroppedGrid()
         display.gamePaintClock()
 
-        /** Displays the player's score */
-        println(s"Player ${player.playerID} : ${player.getScore(arena.grid)} pts")
-
         /** Sets the player's direction based on keyboard input */
         player.lastDirection = player.direction
         if (player.keyboard.getReturnString().nonEmpty) player.direction = player.keyboard.getReturnString() else player.direction = player.lastDirection
 
         /** Asks the player for the next step, and updates the current position */
-        player.playerMove(arena.grid, player.direction)
+        player.playerMove(arena.grid)
 
         /** Determines the action based on the content of the cell */
         arena.action(player.currentPos, player.playerID.toString, players) match {
