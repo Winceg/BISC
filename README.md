@@ -1,5 +1,7 @@
 <h1>Game description</h1>
-///////     insert game description here !      ///////
+BISC is a fusion between Tron, Bix and splix.io
+
+it's a multiplayer game when your goal is to capture the maximum of territory and avoid to be killed or killed by yourself.
 
 ![Screenshot menu](https://github.com/user-attachments/assets/535c8fb2-f04e-4284-955a-009e0c4bbd2e)
 ![Screenshot start](https://github.com/user-attachments/assets/88017cba-ef6c-48f1-ad38-0389f93d868b)
