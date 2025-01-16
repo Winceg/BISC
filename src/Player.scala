@@ -23,7 +23,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
 
   /** Defines the starting direction based on the start position of a player (i.e. if player starts in the left half of the arena, his start direction is right)  */
   def startDirection(arenaWidth: Int): String = {
-    if (startPosX < (arenaWidth / 2)) "r" + this.playerID else "l" + this.playerID
+    if (startPosY < (arenaWidth / 2)) "r" + this.playerID else "l" + this.playerID
   }
 
   /** Gets user input and sets new current position */

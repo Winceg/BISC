@@ -22,6 +22,12 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val cCapPlayer2 = new Color(180, 0, 0)
   val cTempPlayer2 = new Color(180, 100, 100)
   val cHeadPlayer2 = new Color(255, 0, 0)
+  val cCapPlayer3 = new Color(0, 102, 220)
+  val cTempPlayer3 = new Color(102, 178, 255)
+  val cHeadPlayer3 = new Color(0, 128, 255)
+  val cCapPlayer4 = new Color(210, 210, 0)
+  val cTempPlayer4 = new Color(255, 255, 102)
+  val cHeadPlayer4 = new Color(255, 255, 0)
   val cCounter = new Color(20, 100, 255)
   //Create different fonts used in the game
   val gameTitle: Font = new Font("Georgia", Font.BOLD, 50)
@@ -74,6 +80,12 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
           case "2" => colorToPaint = cCapPlayer2
           case "t2" => colorToPaint = cTempPlayer2
           case "x2" => colorToPaint = cHeadPlayer2
+          case "3" => colorToPaint = cCapPlayer3
+          case "t3" => colorToPaint = cTempPlayer3
+          case "x3" => colorToPaint = cHeadPlayer3
+          case "4" => colorToPaint = cCapPlayer4
+          case "t4" => colorToPaint = cTempPlayer4
+          case "x4" => colorToPaint = cHeadPlayer4
         }
 
         /** Second loop to color each pixel on the graphic right spot */
@@ -87,21 +99,33 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   }
 
   /** Displays the start menu and waits for the user to press "enter" */
-  def menuScreen(keyboard: KeyboardInput): Unit = {
-
+  def menuScreen(keyboard: MenuKeyboardInput): Int = {
+    var output:Int = 1
     var input: String = ""
     a.clear(cEmpty)
     a.drawString(graphikGridX / 2 - 60, graphikGridY / 2 - 100, "BISC", gameTitle, cBorders)
     a.drawString(graphikGridX / 2 - 30, graphikGridY / 2 - 20, "MENU", title, cBorders)
-    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 200, "Press enter to Start a Game", subtitle, cBorders)
+    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 30, "For 1 player, hit numpad1", subtitle, cBorders)
+    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 50, "For 2 player, hit numpad2", subtitle, cBorders)
+    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 70, "For 3 player, hit numpad3", subtitle, cBorders)
+    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 90, "For 4 player, hit numpad4", subtitle, cBorders)
+    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 160, "Press enter to Start a Game", subtitle, cBorders)
 
     /** Waits until the user presses the "enter" key */
     do {
       input = keyboard.getReturnString()
+      input match {
+        case "1" => output = 1
+        case "2" => output = 2
+        case "3" => output = 3
+        case "4" => output = 4
+        case _ =>
+      }
       Thread.sleep(100)
     } while (input != "enter")
     keyboard.setReturnString("")
     a.clear(cEmpty)
+    output
   }
 
   /** Displays a countdown before the game starts */
@@ -124,7 +148,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   }
 
   /** Displays the game over screen, with the winner */
-  def gameOverScreen(keyboard: KeyboardInput, winnerPlayer: String, players: Array[Player], arena: Arena): Unit = {
+  def gameOverScreen(keyboard: MenuKeyboardInput, winnerPlayer: String, players: Array[Player], arena: Arena): Unit = {
     var input: String = ""
 
     a.clear(cEmpty)

@@ -2,30 +2,39 @@ object Main {
   def main(args: Array[String]): Unit = {
     var game: Boolean = true
 
-    /** Creates the playing arena, with a given size */
-    val arena: Arena = new Arena(40)
-    val players: Array[Player] = Array.ofDim(2)
-    var gameOver: Boolean = false
-    val speed: Int = 150
-
-    /** Creates a new FunGraphics display */
-    val display = new GameDisplay(arena, 18)
-
-    val mainKeyboard: KeyboardInput = new KeyboardInput(display.a, players, 0)
-
-    /** Creates player1, with his start position */
-    players(0) = new Player(1, 4, 4, arena.gridSizeX, new KeyboardInput(display.a, players, 1))
-
-    /** Creates player2, with his start position */
-    players(1) = new Player(2, 24, 24, arena.gridSizeX, new KeyboardInput(display.a, players, 2))
-
     do {
+      /** Creates the playing arena, with a given size */
+      var arenaSize: Int = 40
+      val arena: Arena = new Arena(arenaSize)
+      val startPositions: Array[Array[Int]] = Array(
+      Array(arenaSize / 5, arenaSize / 5),
+      Array(arenaSize - arenaSize / 5, arenaSize / 5),
+      Array(arenaSize / 5, arenaSize - arenaSize / 5),
+      Array(arenaSize - arenaSize / 5, arenaSize - arenaSize / 5)
+      )
+
+      /** Creates a new FunGraphics display */
+      val display = new GameDisplay(arena, 25)
+      val mainKeyboard: MenuKeyboardInput = new MenuKeyboardInput(display.a)
+      var numberOfPlayers: Int = display.menuScreen(mainKeyboard)
+
+      val players: Array[Player] = Array.ofDim(numberOfPlayers)
+      var gameOver: Boolean = false
+      val speed: Int = 150
+
+
+
+      /** Creates the players, with their start position */
+      for (i <- 0 until numberOfPlayers) {
+        players(i) = new Player(i + 1, startPositions(i)(0), startPositions(i)(1), arena.gridSizeX, new KeyboardInput(display.a, players, i + 1))
+      }
+
       /** Sets the first captured cells of each player */
-      arena.grid(players(0).startPos(0))(players(0).startPos(1)) = players(0).playerID.toString
-      arena.grid(players(1).startPos(0))(players(1).startPos(1)) = players(1).playerID.toString
+      for (player <- players) {
+        arena.grid(player.startPos(0))(player.startPos(1)) = player.playerID.toString
+      }
 
       /** Menu appears, followed by the launch screen */
-      display.menuScreen(mainKeyboard)
       display.launchingScreen()
 
       do {
@@ -58,6 +67,7 @@ object Main {
 
             /** If the cell is empty, sets the current cell to head ("x1") and the last to temp ("t1") */
             case "sp" =>
+
               /** Sets the current position of the player */
               arena.setCurrentPos(player.currentPos, player.playerID)
 
@@ -74,6 +84,7 @@ object Main {
         Thread.sleep(speed)
 
       } while (!gameOver)
+      Thread.sleep(2000)
 
       var winner: String = ""
       for (player <- players) {
