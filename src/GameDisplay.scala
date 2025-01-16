@@ -147,19 +147,4 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
     keyboard.setReturnString("")
     a.clear(cEmpty)
   }
-
-  // pause screen but not used
-  def pauseScreen(keyboard: KeyboardInput): Unit = {
-    var input: String = ""
-    println("Pause")
-    a.clear(cEmpty)
-    a.drawString(graphikGridX / 2 - 85, graphikGridY / 2 - 100, "PAUSE", gameTitle, cBorders)
-    a.drawString(graphikGridX / 2 - 100, graphikGridY / 2 + 200, "Press enter to resume", title, cBorders)
-    do {
-      input = keyboard.getReturnString()
-      Thread.sleep(100)
-    } while (input != "enter")
-    keyboard.setReturnString("")
-    a.clear(cEmpty)
-  }
 }
