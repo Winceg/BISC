@@ -7,7 +7,8 @@ it's a multiplayer game when your goal is to capture the maximum of territory an
 ![Screenshot start](https://github.com/user-attachments/assets/88017cba-ef6c-48f1-ad38-0389f93d868b)
 ![Screenshot in-game](https://github.com/user-attachments/assets/77eadaf9-4b90-4f16-9fe9-0ee62ea37e33)
 ![Screenshot game over](https://github.com/user-attachments/assets/1e8dd525-976d-4063-920e-81b7348ff035)
-
+Improved graphics and multiplayer !
+![img.png](img.png)
 <h1>User manual</h1>
 
 To play BISC

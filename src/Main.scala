@@ -4,27 +4,24 @@ object Main {
 
     do {
       /** Creates the playing arena, with a given size */
-      var arenaSize: Int = 40
+      val arenaSize: Int = 40
       val arena: Arena = new Arena(arenaSize)
       val startPositions: Array[Array[Int]] = Array(
-      Array(arenaSize / 5, arenaSize / 5),
-      Array(arenaSize - arenaSize / 5, arenaSize / 5),
-      Array(arenaSize / 5, arenaSize - arenaSize / 5),
-      Array(arenaSize - arenaSize / 5, arenaSize - arenaSize / 5)
+        Array(arenaSize / 5, arenaSize / 5),
+        Array(arenaSize - arenaSize / 5, arenaSize / 5),
+        Array(arenaSize / 5, arenaSize - arenaSize / 5),
+        Array(arenaSize - arenaSize / 5, arenaSize - arenaSize / 5)
       )
+      var gameOver: Boolean = false
+      var speed: Int = 150
 
-      /** Creates a new FunGraphics display */
+      /** Creates a new FunGraphics display, and a keyboard listener that will return the number of players */
       val display = new GameDisplay(arena, 25)
       val mainKeyboard: MenuKeyboardInput = new MenuKeyboardInput(display.a)
-      var numberOfPlayers: Int = display.menuScreen(mainKeyboard)
+      val numberOfPlayers: Int = display.menuScreen(mainKeyboard)
 
+      /** Creates the array containing all the players, and then adds them to the array */
       val players: Array[Player] = Array.ofDim(numberOfPlayers)
-      var gameOver: Boolean = false
-      val speed: Int = 150
-
-
-
-      /** Creates the players, with their start position */
       for (i <- 0 until numberOfPlayers) {
         players(i) = new Player(i + 1, startPositions(i)(0), startPositions(i)(1), arena.gridSizeX, new KeyboardInput(display.a, players, i + 1))
       }
@@ -39,7 +36,7 @@ object Main {
 
       do {
         for (player <- players) {
-          /** Displays the grid in the console */
+          /** Displays the game visuals */
           display.gamePaintClock(players, arena)
 
           /** Sets the player's direction based on keyboard input */
@@ -81,10 +78,12 @@ object Main {
         for (player <- players) {
           gameOver = gameOver || player.gameOver
         }
+
+        if (speed >= 60) speed -= 1 else speed = 50
         Thread.sleep(speed)
 
       } while (!gameOver)
-      Thread.sleep(2000)
+      Thread.sleep(200)
 
       var winner: String = ""
       for (player <- players) {
@@ -101,7 +100,6 @@ object Main {
 
       /** Exit the game */
       game = if (mainKeyboard.getReturnString() == "esc") false else true
-
     } while (game)
   }
 }
