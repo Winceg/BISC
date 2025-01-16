@@ -38,20 +38,20 @@ class KeyboardInput(val fg: FunGraphics, val players: Array[Player], playerID: I
       if (players.isDefinedAt(2)) {
         if (playerID == players(2).playerID) {
           /** Player 3 input */
-          if (e.getKeyCode == KeyEvent.VK_NUMPAD6) setReturnString("r" + players(2).playerID)
-          if (e.getKeyCode == KeyEvent.VK_NUMPAD4) setReturnString("l" + players(2).playerID)
-          if (e.getKeyCode == KeyEvent.VK_NUMPAD8) setReturnString("u" + players(2).playerID)
-          if (e.getKeyCode == KeyEvent.VK_NUMPAD5) setReturnString("d" + players(2).playerID)
+          if (e.getKeyChar == 'l') setReturnString("r" + players(2).playerID)
+          if (e.getKeyChar == 'j') setReturnString("l" + players(2).playerID)
+          if (e.getKeyChar == 'i') setReturnString("u" + players(2).playerID)
+          if (e.getKeyChar == 'k') setReturnString("d" + players(2).playerID)
         }
       }
 
       if (players.isDefinedAt(3)) {
         if (playerID == players(3).playerID) {
           /** Player 4 input */
-          if (e.getKeyChar == 'l') setReturnString("r" + players(3).playerID)
-          if (e.getKeyChar == 'j') setReturnString("l" + players(3).playerID)
-          if (e.getKeyChar == 'i') setReturnString("u" + players(3).playerID)
-          if (e.getKeyChar == 'k') setReturnString("d" + players(3).playerID)
+          if (e.getKeyCode == KeyEvent.VK_NUMPAD6) setReturnString("r" + players(3).playerID)
+          if (e.getKeyCode == KeyEvent.VK_NUMPAD4) setReturnString("l" + players(3).playerID)
+          if (e.getKeyCode == KeyEvent.VK_NUMPAD8) setReturnString("u" + players(3).playerID)
+          if (e.getKeyCode == KeyEvent.VK_NUMPAD5) setReturnString("d" + players(3).playerID)
         }
       }
 
