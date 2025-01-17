@@ -3,6 +3,8 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
   /** CONTENT : player reset, start direction, player movements, get player score */
 
   /** Class defining the player attributes and functions */
+  val localPlayer: Boolean = false
+  var lanPlayerIP: String = "127.0.0.1"
   val startPos: Array[Int] = Array(startPosX + 2, startPosY + 2)
   var currentPos: Array[Int] = startPos.clone()
   var lastPos: Array[Int] = currentPos.clone()
@@ -21,7 +23,7 @@ class Player(val playerID: Int, startPosX: Int, startPosY: Int, arenaWidth: Int,
     this.keyboard.setReturnString(this.direction)
   }
 
-  /** Defines the starting direction based on the start position of a player (i.e. if player starts in the left half of the arena, his start direction is right)  */
+  /** Defines the starting direction based on the start position of a player (i.e. if player starts in the left half of the arena, his start direction is right) */
   def startDirection(arenaWidth: Int): String = {
     if (startPosY < (arenaWidth / 2)) "r" + this.playerID else "l" + this.playerID
   }

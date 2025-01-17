@@ -39,7 +39,7 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   val scoreTitleBold: Font = new Font("Verdana", Font.BOLD, 16)
   //create a graphic pixel version with a size factor
   val graphikGridX: Int = realSizeX * sizeFactor
-  val graphikGridY: Int = realSizeY * sizeFactor //content the space for score and more
+  val graphikGridY: Int = (realSizeY + 1) * sizeFactor //content the space for score and more
   val a = new FunGraphics(graphikGridX, graphikGridY + 50, "BISC")
 
 
@@ -47,20 +47,20 @@ class GameDisplay(val arena: Arena, val sizeFactor: Int) {
   def gamePaintClock(players: Array[Player], arena: Arena): Unit = {
     var colorToPaint: Color = cEmpty
     var i: Int = 0
-    val offset: Int = 200
+    val offset: Int = 30
     val boxWidth: Int = 150
-    val startBox: Int = graphikGridX / 2 - (60 * players.length + (offset - boxWidth) / 2 * (players.length - 1))
+    val startBox: Int = (graphikGridX / 2) - (boxWidth * players.length + (offset * (players.length - 1))) / 2
     for (player <- players) {
       a.setColor(new Color(125, 125, 125))
-      a.drawFillRect(startBox + 4 + i * offset, graphikGridY + 4, boxWidth, 40)
+      a.drawFillRect(startBox + 4 + i * (boxWidth + offset), graphikGridY + 4, boxWidth, 40)
       a.setColor(new Color(200, 200, 200))
-      a.drawFillRect(startBox + i * offset, graphikGridY, boxWidth, 40)
+      a.drawFillRect(startBox + i * (boxWidth + offset), graphikGridY, boxWidth, 40)
       a.setColor(cBorders)
       a.setPenWidth(3)
-      a.drawRect(startBox + i * offset, graphikGridY, boxWidth, 40)
+      a.drawRect(startBox + i * (boxWidth + offset), graphikGridY, boxWidth, 40)
       a.setPenWidth(1)
-      a.drawString(startBox + 8 + i * offset, graphikGridY + 27, s"Score P${player.playerID} : ${player.getScore(arena.grid)}", scoreTitleBold, cBorders)
-      a.drawString(startBox + 7 + i * offset, graphikGridY + 26, s"Score P${player.playerID} : ${player.getScore(arena.grid)}", scoreTitle, playerColors(i))
+      a.drawString(startBox + 8 + i * (boxWidth + offset), graphikGridY + 27, s"Score P${player.playerID} : ${player.getScore(arena.grid)}", scoreTitleBold, cBorders)
+      a.drawString(startBox + 7 + i * (boxWidth + offset), graphikGridY + 26, s"Score P${player.playerID} : ${player.getScore(arena.grid)}", scoreTitle, playerColors(i))
       i += 1
     }
 
