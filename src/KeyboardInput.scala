@@ -90,6 +90,10 @@ class MenuKeyboardInput(val fg: FunGraphics) {
       if (e.getKeyCode == KeyEvent.VK_NUMPAD2) setReturnString("2")
       if (e.getKeyCode == KeyEvent.VK_NUMPAD3) setReturnString("3")
       if (e.getKeyCode == KeyEvent.VK_NUMPAD4) setReturnString("4")
+      if (e.getKeyCode == KeyEvent.VK_1) setReturnString("1")
+      if (e.getKeyCode == KeyEvent.VK_2) setReturnString("2")
+      if (e.getKeyCode == KeyEvent.VK_3) setReturnString("3")
+      if (e.getKeyCode == KeyEvent.VK_4) setReturnString("4")
     }
   })
 }
